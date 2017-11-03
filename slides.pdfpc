@@ -1,0 +1,60 @@
+[file]
+slides.pdf
+[end_user_slide]
+39
+[notes]
+### 1
+SLAM es un problema de la ROBÓTICA MÓVIL.
+
+CIFASIS - Centro Internacional Franco Argentino de Ciencias de la Información y de Sistemas### 2
+ROBOTS MÓVILES!
+
+Aplicaciones de los robots móviles!### 3
+### 4
+### 5
+### 6
+### 9
+### 10
+### 11
+Motivación: localizar al robot en un entorno desconocido.### 12
+SLAM: Simultaneous Localization and Mapping.
+
+El uno de los problemas MÁS IMPORTANTE de la robótica móvil.
+
+SLAM es resolver el problema de la localización y mapeo de manera simultánea.
+
+TODO ROBOT para poder navegar por el entorno necesita conocer su localización y contar con reconstrucción del entorno (mapa).
+
+Entonces, el Robot va a ir reconstruyendo un mapa del entorno y se va a ir localizando en dicho mapa de manera simultanea.
+### 13
+En particular Wall-E tiene camaras como sensores.### 14
+### 15
+necesitamos dos puntos de vistas para poder realizar una reconstrucción 3D### 16
+pero si estamos usando una sola camara y la movemos para tener dos puntos de vistas distintos, tenemos que saber cuanto se desplazo. Caso contrio, no vamos a poder saber si nos movimos poco, o si nos movimos mucho y las cosas estan muy lejos.### 17
+### 18
+con una reconstrucción de la escena observada (mapa), el robot puede dada una imagen estimar donde se encuentra.
+
+El robot ya cuenta con una reconstruccion 3D de la casa que hizo cuando arranco, ahora se mueve a la derecha. Al observar la nueva imagen que le llega observa que la casa esta a la izquierda indicando que el se desplazo a la derecha.### 19
+### 20
+### 21
+### 22
+### 23
+### 25
+### 26
+### 28
+### 29
+### 30
+### 31
+Un robot que se desplaza por un ambiente de oficinas. El robot cuenta con odometría de las ruedas.### 32
+
+Acá se puede ver cómo S-PTAM sin LC tiene mucha deriva, y la importancia del uso de LC.
+
+Mapa reconstruido por S-PTAM+LC.
+
+### 33
+Arriba se pueden ver las camaras izquieda y derecha y el mapa reconstruido que observan. Abajo  el output de S-PTAM.
+
+Min 2:40 primer loop. Observar como se corrige el Mapa.
+
+Min 9:59 Loop importante.### 34
+Tiene 3 paneles solares. Se espera al menos una autonomia con de 5 horas (esta por verse).

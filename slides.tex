@@ -1,0 +1,92 @@
+% Estas slides tienen que abrirse con el programa pdfpc que soporta videos embebidos
+% el comando es: pdfpc -g slides.pdf
+% para los videos se requiere ubuntu-restricted-extras
+
+
+%\documentclass[compress,handout]{beamer}
+\documentclass[compress]{beamer}
+% compress pone la seccion abajo de todo
+\mode<presentation>
+
+
+% Theme customization
+\usetheme{Copenhagen}
+\useoutertheme{taihu}
+%\useinnertheme{rectangles}
+\setbeamertemplate{itemize item}[rectangle] % configure itemize
+\setbeamertemplate{itemize subitem}[circle] % configure itemize
+\setbeamertemplate{itemize subsubitem}[triangle] % configure itemize
+\setbeamertemplate{navigation symbols}{} % remover simbolos e navegacion de las slides
+\usefonttheme[onlymath]{serif} % simbolos matematicos en serif (Como es en latex original)
+
+\setbeamertemplate{blocks}[rounded] % blocks corners rounded
+\setbeamercolor{block body}{bg=blue!12,fg=black} % color of blocks
+
+
+% Latex packages
+\usepackage{pdfpc-commands} % pdfpc movie commands
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[binary-units=true]{siunitx} % para manejar las unidades
+\usepackage{multirow}
+\usepackage{multimedia}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[caption=false]{subfig} % caption = false elimina la palabra "Figura" del caption
+\setbeamertemplate{caption}{\raggedright\insertcaption\par} % elimina la palabra "Figura" del caption
+\usepackage{import} % para el comando import (se usa para pdf_tex)
+\captionsetup[subfigure]{labelformat=empty} % remover el indice del caption de la subfigura
+
+% add math preamble
+\input{./math_preamble}
+
+
+\title{Localización y Mapeo Simultáneo (SLAM)}
+\author{Dr. Taihú Pire}
+\institute{Departamento de Ciencias de la Computación - FCEIA - UNR\\
+	CIFASIS - CONICET}
+\date{\scriptsize{Noviembre 17, 2017}}
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+
+%\begin{frame}
+%   \frametitle{Estructura de la presentación}
+%   \tableofcontents
+%\end{frame}
+
+\section{Introducción}
+
+
+\section{SLAM}
+
+
+
+\section{Trabajos en curso}
+
+\section*{}
+
+\begin{frame}
+	\centering
+	\Large{Muchísimas gracias!}
+	
+	\pause{Preguntas?}
+	
+	\vspace{2cm}
+	Contacto: {\tt pire@cifasis-conicet.gov.ar}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SLIDES FUERA DE LA PRESENTACIÓN
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+\end{document}
