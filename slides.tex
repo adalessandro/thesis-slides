@@ -54,7 +54,7 @@
 \frame{\titlepage}
 
 
-\section{Sistema GPS}
+\section{Dense S-PTAM}
 
 \begin{frame}
 	\frametitle{Dense S-PTAM}
@@ -62,6 +62,171 @@
 		\centering
 		\includegraphics[width=\columnwidth]{images/dense_diagram.pdf}
 	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Heurística de fusión de puntos}
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=\columnwidth]{images/map_fusion.pdf}
+	\end{figure}
+\end{frame}
+
+\section{Experimentos}
+
+\begin{frame}
+	\frametitle{KITTI: Reconstrucción 3D}
+\begin{figure}[!htb]
+	\centering
+	{\includegraphics[width=0.32\columnwidth]{./images/kitti_3d_1}%
+		\label{kitti_3d_1}}
+	\hfil
+	{\includegraphics[width=0.32\columnwidth]{./images/kitti_3d_2}%
+		\label{kitti_3d_2}}
+	\hfil
+	{\includegraphics[width=0.32\columnwidth]{./images/kitti_3d_3}%
+		\label{kitti_3d_3}}
+	\\
+	\caption{Several 3D reconstructions using our algorithm in the KITTI dataset (sequence 06).}
+	\label{fig:kitti_reconstructions}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Tsukuba: Reconstrucción 3D}
+\begin{figure}[!htb]
+	\centering
+	{\includegraphics[width=0.32\columnwidth, height=3.5cm]{./images/tsukuba_3d_1}%
+		\label{tsukuba_3d_1}}
+	\hfil
+	{\includegraphics[width=0.32\columnwidth, height=3.5cm]{./images/tsukuba_3d_2}%
+		\label{tsukuba_3d_2}}
+	\hfil
+	{\includegraphics[width=0.32\columnwidth, height=3.5cm]{./images/tsukuba_3d_3}%
+		\label{tsukuba_3d_3}}
+	\hfil
+	\caption{Several 3D reconstructions using our algorithm in the Tsukuba dataset.}
+	\label{fig:tsukuba_reconstructions}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Tsukuba: Reconstrucción 3D}
+\begin{figure}[!htb]
+	\centering
+	\subfloat[Left image]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame612_rgb.png}%
+		\label{kitti06_frame612_rgb}}
+	\hfil
+	\subfloat[Ground-Truth]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame612_gt_high50.png}%
+		\label{kitti06_frame612_gt}}
+	\\
+	\subfloat[LIBELAS depth map]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame612_libelas_depth_high50.png}%
+		\label{kitti06_frame612_libelas_depth}}
+	\hfil
+	\subfloat[LIBELAS depth map error]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame612_libelas_error_high50.png}%
+		\label{kitti06_frame612_libelas_error}}
+	\\
+	\subfloat[Dense S-PTAM depth map]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame612_dense_high50.png}%
+		\label{kitti06_frame612_dense}}
+	\hfil
+	\subfloat[Dense S-PTAM depth map error]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame612_error_high50.png}%
+		\label{kitti06_frame612_error}}
+	\\
+	\subfloat[Color metric]{\includegraphics[width=0.45\columnwidth]{./images/high50_bar.pdf}%
+		\label{kitti06_bar}}
+	\caption{Comparison of LIBELAS and Dense S-PTAM depth maps against the ground truth, for a single frame (KITTI dataset).}
+	\label{fig:kitti06_frame612}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Tsukuba: Reconstrucción 3D}
+\begin{figure}[!htb]
+	\centering
+	\subfloat[Left image]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame612_rgb.png}%
+		\label{kitti06_frame777_rgb}}
+	\hfil
+	\subfloat[Ground-Truth]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame777_gt_high50.png}%
+		\label{kitti06_frame777_gt}}
+	\\
+	\subfloat[LIBELAS depth map]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame777_libelas_depth_high50.png}%
+		\label{kitti06_frame777_libelas_depth}}
+	\hfil
+	\subfloat[LIBELAS Depth map error]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame777_libelas_error_high50.png}%
+		\label{kitti06_frame777_libelas_error}}
+	\\
+	\subfloat[Dense S-PTAM depth map]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame777_dense_high50.png}%
+		\label{kitti06_frame777_dense}}
+	\hfil
+	\subfloat[Dense S-PTAM depth map error]{\includegraphics[width=0.45\columnwidth]{./images/kitti06_frame777_error_high50.png}%
+		\label{kitti06_frame777_error}}
+	\\
+	\subfloat[Color metric]{\includegraphics[width=0.45\columnwidth]{./images/high50_bar.pdf}%
+		\label{kitti06_frame777_bar}}
+	\caption{Comparison of LIBELAS and Dense S-PTAM depth maps against the ground truth, for a single frame (KITTI dataset).}
+	\label{fig:kitti06_frame777}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Tsukuba: Reconstrucción 3D}
+% tsukuba
+\begin{figure}[!htb]
+	\centering
+	\subfloat[Left image]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame807_rgb.png}%
+		\label{tsukuba_frame807_rgb}}
+	\hfil
+	\subfloat[Ground-Truth]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame807_gt_high6.png}%
+		\label{tsukuba_gt}}
+	\\
+	\subfloat[LIBELAS depth map]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame807_libelas_depth_high6.png}%
+		\label{tsukuba_frame807_libelas_depth}}
+	\hfil
+	\subfloat[LIBELAS depth map error]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame807_libelas_error_high6.png}%
+		\label{tsukuba_frame807_libelas_error}}
+	\\
+	\subfloat[Dense S-PTAM depth map]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame807_dense_high6.png}%
+		\label{tsukuba_frame807_dense}}
+	\hfil
+	\subfloat[Dense S-PTAM depth map error]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame807_error_high6.png}%
+		\label{tsukuba_frame807_error}}
+	\\
+	\subfloat[Color metric]{\includegraphics[width=0.4\columnwidth]{./images/high6_bar.pdf}%
+		\label{tsukuba_frame807_bar}}
+	\caption{Comparison of LIBELAS and Dense S-PTAM depth maps against the ground truth, for a single frame (Tsukuba dataset).}
+	\label{fig:tsukuba_frame807}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Tsukuba: Reconstrucción 3D}
+% tsukuba
+\begin{figure}[!htb]
+	\centering
+	\subfloat[Left image]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame1314_rgb.png}%
+		\label{tsukuba_frame1314_rgb}}
+	\hfil
+	\subfloat[Ground-Truth]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame1314_gt_high6.png}%
+		\label{tsukuba_frame1314_gt}}
+	\\
+	\subfloat[LIBELAS depth Map]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame1314_libelas_depth_high6.png}%
+		\label{tsukuba_frame1314_libelas_depth}}
+	\hfil
+	\subfloat[LIBELAS depth map error]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame1314_libelas_error_high6.png}%
+		\label{tsukuba_frame1314_libelas_error}}
+	\\
+	\subfloat[Dense S-PTAM depth map]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame1314_dense_high6.png}%
+		\label{tsukuba_frame1314_dense}}
+	\hfil
+	\subfloat[Dense S-PTAM depth map error]{\includegraphics[width=0.4\columnwidth]{./images/tsukuba_frame1314_error_high6.png}%
+		\label{tsukuba_frame1314_error}}
+	\\
+	\subfloat[Color metric]{\includegraphics[width=0.4\columnwidth]{./images/high6_bar.pdf}%
+		\label{tsukuba_frame1314_bar}}
+	\caption{Comparison of LIBELAS and Dense S-PTAM depth maps against the ground truth, for a single frame (Tsukuba dataset).}
+	\label{fig:tsukuba_frame1314}
+\end{figure}
 \end{frame}
 
 
