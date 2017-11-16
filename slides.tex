@@ -69,7 +69,7 @@
 	\frametitle{Dense S-PTAM}
 	\begin{figure}[htb]
 		\centering
-		\includegraphics[width=\columnwidth]{images/dense_diagram.pdf}
+		\includegraphics[width=0.8\columnwidth]{images/dense_diagram.pdf}
 	\end{figure}
 \end{frame}
 
@@ -79,6 +79,12 @@
 		\centering
 		\includegraphics[width=\columnwidth]{images/map_fusion.pdf}
 	\end{figure}
+	
+	\begin{equation*}
+		\point_{\mathrm{\fusion}} = \dfrac{1}{\inverseDepth_\mathrm{\fusion}} \dfrac{\point_{\mathrm{\current}}}{\norm{\point_{\mathrm{\current}}}}
+		\quad \text{donde} \quad 
+		\inverseDepth_{\fusion} = \dfrac{\inverseDepth_{\current} + \inverseDepth_{\previous}}{2}
+	\end{equation*}
 \end{frame}
 
 \section{Evaluación}
@@ -123,8 +129,7 @@
 	\hfil
 	{\includegraphics[width=0.32\columnwidth]{./images/kitti_3d_3}%
 		\label{kitti_3d_3}}
-	\\
-	\caption{Several 3D reconstructions using our algorithm in the KITTI dataset (sequence 06).}
+	\caption{Vistas de la reconstrucción 3D obtenidas para el dataset KITTI.}
 	\label{fig:kitti_reconstructions}
 \end{figure}
 \end{frame}
@@ -141,8 +146,8 @@
 	\hfil
 	{\includegraphics[width=0.32\columnwidth, height=3.5cm]{./images/tsukuba_3d_3}%
 		\label{tsukuba_3d_3}}
-	\hfil
-	\caption{Several 3D reconstructions using our algorithm in the Tsukuba dataset.}
+	
+	\caption{Vistas de la reconstrucción 3D obtenidas para el dataset Tsukuba.}
 	\label{fig:tsukuba_reconstructions}
 \end{figure}
 \end{frame}
@@ -287,7 +292,8 @@
 	\begin{figure}[!htb]
 		\centering
 		\includegraphics[width=0.8\columnwidth]{images/medians_comparison_kitti}
-		\caption{Median error comparison between LIBELAS and dense (depth vs errors) on KITTI sequence 06.}
+%		\caption{Median error comparison between LIBELAS and dense (depth vs errors) on KITTI sequence 06.}
+		\caption{Comparación del error de mediana entre las reconstruccones obtenidas por LIBELAS y Dense en la secuencia de KITTI 06.}
 		\label{fig:median_comparison_kitti}
 	\end{figure}
 \end{frame}
@@ -314,6 +320,7 @@
 		\centering
 		\includegraphics[width=0.8\columnwidth]{images/medians_comparison_tsukuba}
 		%\caption{Median error comparison between LIBELAS and Dense S-PTAM (depth vs errors) on Tsukuba sequence.}
+		\caption{Comparación del error de mediana entre las reconstruccones obtenidas por LIBELAS y Dense en la secuencia de Tsukuba.}
 		\label{fig:median_comparison_tsukuba}
 	\end{figure}
 \end{frame}
@@ -387,7 +394,7 @@
 	\frametitle{Conclusiones}
 	\begin{itemize}
 		\item Sistema de SLAM capaz de generar un \textbf{mapa local denso} en \textbf{tiempo real}
-        \item La precisión resulta útil para tareas de \textbf{navegación}
+        \item La precisión es útil para tareas de \textbf{navegación}
         \item Funciona incluso en trajectorias de grandes dimensiones
         \item Evaluado en datasets públicos: KITTI (outdoors) y Tsukuba (indoors)
 	    \item Código open-source en ROS (GPLv3)

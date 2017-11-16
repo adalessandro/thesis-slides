@@ -13,15 +13,16 @@
 % Homogeneous decoration function
 \newcommand{\homo}[1]{\dot{#1}}
 
-
 % Declare projection as math function
 \DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\disp}{disp}
 \newcommand{\worldCoordSystem}{\mathrm{w}}
 \newcommand{\cameraCoordSystem}{\mathrm{c}}
 \newcommand{\point}{\vec{x}}
 \newcommand{\worldPoint}{\point^{\mathrm{w}}}
 \newcommand{\homoWorldPoint}{\homo{\point}^{\mathrm{w}}}
 \newcommand{\cameraPoint}{\point^{\mathrm{c}}}
+\newcommand{\hatCameraPoint}{\hat{\point}^{\mathrm{c}}}
 \newcommand{\homoCameraPoint}{\homo{\point}^{\mathrm{c}}}
 \newcommand{\measurement}{\vec{z}}
 \newcommand{\prediction}{\hat{\vec{z}}}
@@ -35,33 +36,15 @@
 \newcommand{\projectionMatrix}{\vec{P}}
 \newcommand{\cameraCenter}{\vec{o}}
 
-% Motion model
-\newcommand{\position}{\vec{p}}
-\newcommand{\orientationQuaternion}{\vec{q}}
-\newcommand{\predictedPosition}{\hat{\vec{p}}}
-\newcommand{\predictedOrientationQuaternion}{\hat{\vec{q}}}
-\newcommand{\linearVelocity}{\vec{v}}
-\newcommand{\angularVelocity}{\vec{\omega}}
 
-\DeclareMathOperator{\slerpOp}{slerp}
-\newcommand{\slerp}[1]{\slerpOp{\left( #1 \right)}}
+% Dense Map
+\newcommand{\current}{\mathrm{current}}
+\newcommand{\previous}{\mathrm{previous}}
+\newcommand{\fusion}{\mathrm{fusion}}
+\newcommand{\inverseDepth}{\rho}
+\newcommand{\plane}{\vec{\pi}}
+\newcommand{\reference}{ref}
 
-% Map structure
-\newcommand{\map}{M}
-\newcommand{\keyframesSet}{K}
-\newcommand{\mapPointsSet}{P}
-\newcommand{\observedMapPoints}{O}
-\newcommand{\covisibilityKeyframes}{CK}
-\newcommand{\localMap}{local\_map}
-
-
-
-% Bundle Adjutment
-\newcommand{\update}{\vec{\delta}}
-\newcommand{\incremental}{\hat{\update}}
-
-
-% Loop Closure names
 
 % scaled operators and letters to fancy view
 \newcommand{\sminus}{\scalebox{0.5}[1.0]{$-$}}
@@ -71,20 +54,11 @@
 \newcommand{\ind}[1]{\scalebox{0.7}[0.7]{$#1$}}
 
 \newcommand{\keyframe}{\vec{K}}
-\newcommand{\bowVector}{\vec{v}}
-\newcommand{\lcError}{\vec{\Omega}}
-\newcommand{\relativeTransformation}{\seMatrix}
-\DeclareMathOperator{\interpolate}{interpolate}
-
-\newcommand{\relativeMotion}{\vec{\delta}}
+\newcommand{\pointCloud}{\vec{M}}
 \newcommand{\groundTruth}[1]{{#1}^{*}}
 
-% definición del operador rot()
-\DeclareMathOperator{\rotationOp}{rot}
-\newcommand{\getRotation}[1]{\rotationOp{\left( #1 \right)}}
+\newcommand{\update}[1]{\hat{#1}}
 
-\DeclareMathOperator{\translationOp}{trans}
-\newcommand{\getTranslation}[1]{\translationOp{\left( #1 \right)}}
 
 
 
