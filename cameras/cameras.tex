@@ -170,3 +170,149 @@ punto $\homo{\imagePoint}$ en el plano de la imagen mediante:
 \end{block}
 
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Modelo de cámara estéreo}
+
+\begin{block}{Geometría epipolar}
+
+\pnote{* La geometría proyectiva intrínseca entre dos cámaras es conocida como geometría epipolar.}
+
+\pnote{* Esta es independiente de la escena observada y depende únicamente de los parámetros internos geometría epipolar y las posiciones relativas de las cámaras involucradas.}
+
+Cualquier punto 3D $\point$ en el espacio, sus proyecciones $\imagePoint$ y $\imagePoint^{\prime}$ en los planos de las imágenes y los centros focales de las cámaras, pertenecen a un mismo plano $\vec{\pi}$.
+De manera análoga, los rayos re-proyectados desde $\imagePoint$ y $\imagePoint^{\prime}$ se intersectan en $\point$, son coplanares y yacen sobre $\vec{\pi}$.
+\end{block}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pencil_of_planes.pdf}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/epipolar_plane.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Modelo de cámara estéreo}
+
+\pnote{* La búsqueda del correspondiente al punto u no necesita cubrir el plano de la imagen completo sino que puede restringirse a la línea epipolar l.}
+
+\pnote{* La línea epipolar es generada por la proyección del rayo, re-proyectado desde u, sobre el plano focal de la segunda imagen.}
+
+Búsqueda de correspondencias sobre la línea epipolar.
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/epipolar_line.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Rectificación estéreo}
+
+\pnote{* Luego de aplicar rectificación estéreo, la búsqueda de correspondencias entre las imágenes es reducida a una búsqueda unidimensional, sobre la misma fila.}
+
+\begin{itemize}
+\item Proyectar el par de imágenes estéreo sobre un plano de imagen común.
+\item Los puntos correspondientes se encuentren alineados en la misma fila.
+\end{itemize}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.6\columnwidth]{./cameras/stereo_rectification.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Rectificación estéreo}
+
+\pnote{* Rectificación estéreo sobre un par de imágenes del Dataset Level 7 [32]. (a) Par de imágenes estéreo original provisto por la cámara estéreo.}
+\pnote{* (b) El par de imágenes estéreo luego de ser rectificadas. Las líneas rojas asocian algunos puntos correspondientes entre ambas imágenes. Notar que estos puntos se encuentran en la misma fila en ambas imágenes.}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.6\columnwidth]{./cameras/no_rectified_stereo_images.png}}%
+	\hfill
+	\\
+	\centering
+	\subfloat[]{\includegraphics[width=0.6\columnwidth]{./cameras/rectified_stereo_images.png}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Triangulación estéreo}
+
+\pnote{* Sea x = x y z un punto 3D cuyas coordenadas son desconocidas. Conociendo las proyecciones correspondientes, la posición del punto x puede ser derivada.}
+
+\pnote{* Aplicando la propiedad de triángulos semejantes entre el triángulo de línea negra punteada y el triángulo de línea roja en la Figura, la siguiente ecuación puede ser formulada.}
+
+Proyecciones correspondientes $\imagePoint_{l}=\begin{bmatrix}u_{l} & v_{l}\end{bmatrix}$ y $\imagePoint_{r}=\begin{bmatrix}u_{r} & v_{r}\end{bmatrix}$ sobre los planos focales de la imagen izquierda y derecha respectivamente,
+la posición del punto $\point$ puede ser derivada.
+
+\begin{equation}
+\frac{b}{z}=\frac{(b+u_{r})-u_{l}}{z-f}
+\end{equation}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation.pdf}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation2.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Triangulación estéreo}
+
+\pnote{* De la misma manera, utilizando propiedad de triángulos semejantes nuevamente sobre la Figura, se obtienen las restantes ecuaciones.}
+
+\begin{equation}
+\frac{x}{z}=\frac{u_{l}-c_{u}}{f}\qquad\frac{y}{z}=\frac{v_{l}-c_{v}}{f}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}x=\frac{(u_{l}-c_{u})z}{f}\;\qquad
+y=\frac{(v_{l}-c_{v})z}{f}\;\qquad
+z=\frac{bf}{u_{l}-u_{r}}\;
+\end{aligned}
+\end{equation}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation.pdf}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation2.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Disparidad}
+
+\pnote{* Cuando el valor de disparidad $d$ es cercano a $0$, pequeñas diferencias de disparidad producen un gran cambio en la profundidad del punto. En consecuencia, la reconstrucción 3D del ambiente mediante cámaras estéreo es más precisa para puntos cercanos a la cámara.}
+
+\begin{block}{Definición - Disparidad}
+La disparidad $d$ es definida como la distancia existente entre las proyecciones de las diferentes cámaras.
+\begin{equation}
+d=u_{l}-u_{r}=\frac{bf}{z}
+\end{equation}
+\end{block}
+
+\textbf{Nota}: la profundidad $z$ es inversamente proporcional a la disparidad $d$.
+
+\end{frame}
