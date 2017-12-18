@@ -68,13 +68,831 @@
 \tableofcontents
 \end{frame}
 
-\input{introduction/introduction.tex}
-\input{cameras/cameras.tex}
-\input{method/method.tex}
-\input{experiments/experiments.tex}
-\input{conclusions/conclusions.tex}
 
-\section*{}
+\section{Introducción}
+
+
+\begin{frame}
+\frametitle{Motivación}
+
+\begin{block}{Objetivo a desarrollar}
+Método de reconstrucción 3D o mapeo denso en tiempo real sobre sistemas de localización y mapeo simultáneo (SLAM) basado en visión estéreo.
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Reconstrucción 3D}
+
+\pnote{* Reconstrucción 3D: Proceso mediante el cual se captura y representa la forma y apariencia de entornos u objetos presentes en la realidad. Diseño asistido por computadora, imágenes médicas, realidad virtual y aumentada, robótica movil, entre otros.}
+
+\pnote{* Uno de los principales problemas presentes en aplicaciones relativas a robots autónomos móviles consiste en el planeamiento de una trayectoria segura hacia determinados objetivos, mientras el robot se desplaza a través de un entorno potencialmente desconocido.}
+
+\pnote{* Para esto, resulta necesario contar con una representación del ambiente que se está transitando (mapa) y la ubicación del robot dentro del mismo (SLAM - slide siguiente).}
+
+\pnote{* El mapa debe ser suficientemente detallado (denso) para que el robot pueda realizar un planeamiento seguro, evitando posibles obstáculos.}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.30\columnwidth]{./introduction/3d-skull.jpg}}%
+	\hfill
+	\subfloat[]{\includegraphics[width=0.30\columnwidth]{./introduction/3d-dinosaur.jpg}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.40\columnwidth]{./introduction/3d-indoor.jpg}}%
+	\hfill
+	\\
+	\centering
+	\subfloat[]{\includegraphics[width=0.70\columnwidth]{./introduction/3d-building.png}}%
+	\hfill
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{SLAM - Simultaneous Localisation and Mapping}
+
+\pnote{* A partir de la detección y seguimiento de marcas naturales del ambiente (landmarks), los sistemas de SLAM pueden estimar tanto la posición del robot como la ubicación de estas marcas en el entorno. El mapa es construído incrementalmente con las posiciones estimadas de dichas marcas, las cuales son ajustadas a lo largo de la trayectoria a medida que son observadas.}
+
+\begin{itemize}
+\item Construir incrementalmente un mapa del entorno.
+\item Determinar su posición y orientación en el mismo.
+\end{itemize}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.50\columnwidth]{./introduction/slam-landmarks.pdf}}%
+	\hfill
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{SLAM Visual - Cámaras}
+
+\pnote{* Cámaras: rica información de la escena. Ventajas: bajo costo, menor consumo energético en comparación con otros sensores, como lásers, portabilidad y alta disponibilidad en dispositivos móviles. Son sensores pasivos por lo que no interferen con otros sensores y pueden utilizarse en entornos interiores, donde el uso de GPS puede verse imposibilitado. Asímismo, son menos restrictivos que los encoders, los cuales se encuentran limitados a robots terrestres y resultan imprecisos en terrenos irregulares.}
+
+\begin{itemize}
+\item Bajo costo.
+\item Bajo consumo energético.
+\item Alta disponibilidad en dispositivos móviles.
+\item Sensores pasivos.
+\item Apto entornos interiores.
+\item Apto terrenos irregulares.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{SLAM Visual - Cámaras estéreo}
+
+\pnote{* Cámaras estéreo: Existen dos enfoques predominantes en los sistemas de SLAM basados en cámaras, denominados monocular y estéreo. Los sistemas de SLAM visual estéreo proveen información sobre la profundidad de los píxeles mediante una única observación, lo cual requiere mayor número de cómputos en el caso monocular.}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.45\columnwidth]{./introduction/camera-stereo-old.jpg}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.45\columnwidth]{./introduction/camera-stereo-new.jpg}}%
+	\hfill
+\end{figure}
+
+\end{frame}
+
+\section{Cámaras como sensores}
+
+
+\begin{frame}
+\frametitle{Modelo de cámara}
+
+\begin{block}{Definición - Cámara}
+Una cámara es definida matemáticamente como una correspondencia entre el mundo 3D y una imagen 2D. Es decir, un mapeo entre puntos del mundo 3D $\point$ y puntos de la imagen $\imagePoint$:
+\begin{equation}
+\point=\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}\longmapsto
+\imagePoint=\begin{bmatrix}u\\
+v
+\end{bmatrix}
+\end{equation}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Modelo de cámara pinhole}
+
+\pnote{* Rayo principal o eje principal de la cámara: rayo que se origina en el centro focal \cameraCenter y es perpendicular al plano de la imagen.}
+
+\pnote{* Punto principal: el punto donde este rayo intersecta al plano de la imagen es denominado.}
+
+\begin{block}{Cámara pinhole}
+El punto de la imagen $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$ es determinado como la intersección entre el \emph{plano de la imagen} y el rayo que une el punto del mundo 3D $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$ con el \emph{centro focal} $\cameraCenter$ de la cámara.
+\end{block}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pinhole_camera_model.pdf}}%
+	\hfill
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Modelo de cámara pinhole}
+
+\pnote{* Proyección central: Utilizando la propiedad de semejanza de triángulos, el punto 3D es mapeado al punto en el plano de la imagen.}
+
+\begin{block}{Proyección central}
+Asumiendo el centro focal en el origen de coordenadas y el plano de la imagen $Z=f$:
+
+\begin{equation}
+\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}\longmapsto\begin{bmatrix}fx/z\\
+fy/z
+\end{bmatrix}
+\end{equation}
+
+\end{block}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pinhole_camera_model.pdf}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pinhole_camera_model2.pdf}}%
+	\hfill
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Modelo de cámara pinhole}
+
+\pnote{* Lo anterior asume que el origen de coordenadas del plano de la imagen se encuentra en el punto principal. En la práctica, esto no siempre se cumple.}
+
+\pnote{* Explicar representación en coordenadas homogéneas.}
+
+Siendo $\begin{bmatrix}c_{u} & c_{v}\end{bmatrix}^{\top}$ la posición del punto principal.
+\begin{equation}
+\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}\longmapsto\begin{bmatrix}fx/z+c_{u}\\
+fy/z+c_{v}
+\end{bmatrix}
+\end{equation}
+
+En coordenadas homogéneas:
+
+\begin{equation}
+\begin{bmatrix}x\\
+y\\
+z\\
+1
+\end{bmatrix}\longmapsto\begin{bmatrix}fx+zc_{u}\\
+fy+zc_{v}\\
+z
+\end{bmatrix}=\begin{bmatrix}f &  & c_{u} & 0\\
+ & f & c_{v} & 0\\
+ &  & 1 & 0
+\end{bmatrix}\begin{bmatrix}x\\
+y\\
+z\\
+1
+\end{bmatrix}
+\end{equation}
+
+\begin{block}{Matriz de calibración intrínseca $\intrinsicMatrix$}
+\begin{equation}
+\intrinsicMatrix=\begin{bmatrix}f & 0 & c_{u}\\
+0 & f & c_{v}\\
+0 & 0 & 1
+\end{bmatrix}
+\end{equation}
+\begin{equation}
+\homo{\imagePoint}=\intrinsicMatrix\begin{bmatrix}\vec{{I}} & \vec{{0}}\end{bmatrix}\homo{\point}
+\end{equation}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Modelo de cámara pinhole}
+
+\pnote{* Las ecuaciones anteriores deben extenderse agregando la transformación existente entre los sistemas de coordenadas de la cámara y el mundo.}
+
+\pnote{* R es una matriz de rotación y t un vector de traslación.}
+
+Puntos expresados en referencia al sistema de coordenadas del \textit{mundo}. La cámara no se encuentra necesariamente ubicada en el centro de este.
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.4\columnwidth]{./cameras/camera_coord_system.pdf}}%
+	\hfill
+\end{figure}
+
+\begin{block}{}
+\begin{equation}
+\homoCameraPoint=\begin{bmatrix}\rotation & \translation\\
+0 & 1
+\end{bmatrix}\begin{bmatrix}x\\
+y\\
+z\\
+1
+\end{bmatrix}=\seMatrix^{\mathrm{c}\mathrm{w}}\homoWorldPoint\;.
+\end{equation}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Modelo de cámara pinhole}
+
+De esta manera, es posible proyectar cualquier punto 3D
+$\homoWorldPoint$ en el sistema de coordenadas del mundo al correspondiente
+punto $\homo{\imagePoint}$ en el plano de la imagen mediante:
+
+\begin{block}{Matriz de proyección \textmd{$\projectionMatrix$}}
+\begin{equation}
+\projectionMatrix=\intrinsicMatrix\begin{bmatrix}\rotation & \translation\end{bmatrix}
+\end{equation}
+\begin{equation}
+\homo{\imagePoint}=\projectionMatrix\homoWorldPoint
+\end{equation}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Modelo de cámara estéreo}
+
+\begin{block}{Geometría epipolar}
+
+\pnote{* La geometría proyectiva intrínseca entre dos cámaras es conocida como geometría epipolar.}
+
+\pnote{* Esta es independiente de la escena observada y depende únicamente de los parámetros internos geometría epipolar y las posiciones relativas de las cámaras involucradas.}
+
+Cualquier punto 3D $\point$ en el espacio, sus proyecciones $\imagePoint$ y $\imagePoint^{\prime}$ en los planos de las imágenes y los centros focales de las cámaras, pertenecen a un mismo plano $\vec{\pi}$.
+De manera análoga, los rayos re-proyectados desde $\imagePoint$ y $\imagePoint^{\prime}$ se intersectan en $\point$, son coplanares y yacen sobre $\vec{\pi}$.
+\end{block}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pencil_of_planes.pdf}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/epipolar_plane.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Modelo de cámara estéreo}
+
+\pnote{* La búsqueda del correspondiente al punto u no necesita cubrir el plano de la imagen completo sino que puede restringirse a la línea epipolar l.}
+
+\pnote{* La línea epipolar es generada por la proyección del rayo, re-proyectado desde u, sobre el plano focal de la segunda imagen.}
+
+Búsqueda de correspondencias sobre la línea epipolar.
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/epipolar_line.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Rectificación estéreo}
+
+\pnote{* Luego de aplicar rectificación estéreo, la búsqueda de correspondencias entre las imágenes es reducida a una búsqueda unidimensional, sobre la misma fila.}
+
+\begin{itemize}
+\item Proyectar el par de imágenes estéreo sobre un plano de imagen común.
+\item Los puntos correspondientes se encuentren alineados en la misma fila.
+\end{itemize}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.6\columnwidth]{./cameras/stereo_rectification.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Rectificación estéreo}
+
+\pnote{* Rectificación estéreo sobre un par de imágenes del Dataset Level 7 [32]. (a) Par de imágenes estéreo original provisto por la cámara estéreo.}
+\pnote{* (b) El par de imágenes estéreo luego de ser rectificadas. Las líneas rojas asocian algunos puntos correspondientes entre ambas imágenes. Notar que estos puntos se encuentran en la misma fila en ambas imágenes.}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.6\columnwidth]{./cameras/no_rectified_stereo_images.png}}%
+	\hfill
+	\\
+	\centering
+	\subfloat[]{\includegraphics[width=0.6\columnwidth]{./cameras/rectified_stereo_images.png}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Triangulación estéreo}
+
+\pnote{* Sea x = x y z un punto 3D cuyas coordenadas son desconocidas. Conociendo las proyecciones correspondientes, la posición del punto x puede ser derivada.}
+
+\pnote{* Aplicando la propiedad de triángulos semejantes entre el triángulo de línea negra punteada y el triángulo de línea roja en la Figura, la siguiente ecuación puede ser formulada.}
+
+Proyecciones correspondientes $\imagePoint_{l}=\begin{bmatrix}u_{l} & v_{l}\end{bmatrix}$ y $\imagePoint_{r}=\begin{bmatrix}u_{r} & v_{r}\end{bmatrix}$ sobre los planos focales de la imagen izquierda y derecha respectivamente,
+la posición del punto $\point$ puede ser derivada.
+
+\begin{equation}
+\frac{b}{z}=\frac{(b+u_{r})-u_{l}}{z-f}
+\end{equation}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation.pdf}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation2.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Triangulación estéreo}
+
+\pnote{* De la misma manera, utilizando propiedad de triángulos semejantes nuevamente sobre la Figura, se obtienen las restantes ecuaciones.}
+
+\begin{equation}
+\frac{x}{z}=\frac{u_{l}-c_{u}}{f}\qquad\frac{y}{z}=\frac{v_{l}-c_{v}}{f}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}x=\frac{(u_{l}-c_{u})z}{f}\;\qquad
+y=\frac{(v_{l}-c_{v})z}{f}\;\qquad
+z=\frac{bf}{u_{l}-u_{r}}\;
+\end{aligned}
+\end{equation}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation.pdf}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation2.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Disparidad}
+
+\pnote{* Cuando el valor de disparidad $d$ es cercano a $0$, pequeñas diferencias de disparidad producen un gran cambio en la profundidad del punto. En consecuencia, la reconstrucción 3D del ambiente mediante cámaras estéreo es más precisa para puntos cercanos a la cámara.}
+
+\begin{block}{Definición - Disparidad}
+La disparidad $d$ es definida como la distancia existente entre las proyecciones de las diferentes cámaras.
+\begin{equation}
+d=u_{l}-u_{r}=\frac{bf}{z}
+\end{equation}
+\end{block}
+
+\textbf{Nota}: la profundidad $z$ es inversamente proporcional a la disparidad $d$.
+
+\end{frame}
+
+
+\section{Método}
+
+
+\begin{frame}
+\frametitle{S-PTAM}
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1.0\columnwidth]{method/portada-sptam-kitti-video.pdf}
+	\hfill
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{S-PTAM}
+
+\begin{itemize}
+\item Sistema SLAM basado en features.
+\item Cámara estéreo como sensor principal.
+\item Construye y mantiene un mapa disperso del entorno.
+\item Basado en keyframes.
+\end{itemize}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.8\columnwidth]{method/sptam_kitti.png}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+
+\frametitle{Dense S-PTAM}
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=1.0\columnwidth]{method/metodo-diagram.pdf}
+	\hfill
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Cómputo de disparidad}
+
+\begin{block}{LIBELAS (Library for Efficient Large-scale Stereo Matching)}
+\begin{itemize}
+\item Andreas Geiger, Julius Ziegler, and Christoph Stiller. StereoScan: Dense 3d reconstruction in real-time. In \textit{2011 IEEE Intelligent Vehicles Symposium (IV)}, pages 963-968, June 2011.
+\item Librería multiplataforma de código abierto para computar mapas de disparidad a partir de pares de imágenes estéreo rectificadas de alta resolución.
+\end{itemize}
+\end{block}
+
+\begin{block}{Definición - Mapa de disparidad}
+Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los píxeles en el plano de la imagen a su correspondiente valor de disparidad. Denominaremos $\disparityMap_{j}$ a la función que representa el mapa de disparidad generado a partir del par de imágenes estéreo del \emph{keyframe} $\keyframe_{j}$.
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Cómputo de disparidad}
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.5\columnwidth]{method/libelas_merge_kitti04_22.jpg}
+	\caption{Mapa de disparidad LIBELAS - Dataset KITTI.}
+\end{figure}
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.5\columnwidth]{method/libelas_merge_tsukuba_222.jpg}
+	\caption{Mapa de disparidad LIBELAS - Dataset Tsukuba.}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Expansión y fusión de mapa}
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=\columnwidth]{images/map_fusion.pdf}
+	\end{figure}
+	
+	\begin{equation*}
+		\point_{\mathrm{\fusion}} = \dfrac{1}{\inverseDepth_\mathrm{\fusion}} \dfrac{\point_{\mathrm{\current}}}{\norm{\point_{\mathrm{\current}}}}
+		\quad \text{donde} \quad 
+		\inverseDepth_{\fusion} = \dfrac{\inverseDepth_{\current} + \inverseDepth_{\previous}}{2}
+	\end{equation*}
+\end{frame}
+
+
+\section{Evaluación}
+
+\subsection{Datasets}
+
+\begin{frame}
+	\frametitle{KITTI}
+	\begin{figure}
+		\subfloat[] {
+			\includegraphics[width=0.3\columnwidth]{./images/kitti_sensors}
+		}\hfill{}
+		\subfloat[] {
+			\begin{tabular}[b]{c}%
+				\includegraphics[width=0.3\columnwidth]{./images/kitti01}\thickspace\includegraphics[width=0.3\columnwidth]{./images/kitti02}\\
+				\includegraphics[width=0.3\columnwidth]{./images/kitti03}\thickspace\includegraphics[width=0.3\columnwidth]{./images/kitti04}\\
+				\includegraphics[width=0.3\columnwidth]{./images/kitti05}\thickspace\includegraphics[width=0.3\columnwidth]{./images/kitti06}
+			\end{tabular}
+		}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Tsukuba}
+	\begin{figure}
+		\subfloat[] {
+			\includegraphics[width=0.4\columnwidth]{./images/tsukuba_dataset}
+		}\hspace{0.2cm}
+		\subfloat[] {
+			\begin{tabular}[b]{c}%
+				\includegraphics[width=0.2\columnwidth]{./images/tsukuba_sample1}\thickspace\includegraphics[width=0.2\columnwidth]{./images/tsukuba_sample2}\\
+				\includegraphics[width=0.2\columnwidth]{./images/tsukuba_sample3}\thickspace\includegraphics[width=0.2\columnwidth]{./images/tsukuba_sample4}
+			\end{tabular}
+		}
+	\end{figure}
+\end{frame}
+
+\subsection{Resultados}
+
+\begin{frame}
+	\frametitle{Reconstrucción 3D}
+	\begin{figure}
+		\subfloat[] {
+			\begin{tabular}[b]{c}
+				\includegraphics[width=0.3\columnwidth]{./images/kitti_3d_1}\thickspace
+				\includegraphics[width=0.3\columnwidth]{./images/kitti_3d_2}\thickspace
+				\includegraphics[width=0.3\columnwidth]{./images/kitti_3d_3}
+			\end{tabular}
+		}\vspace{0.1cm}
+		\subfloat[] {
+			\begin{tabular}[b]{c}
+				\includegraphics[width=0.3\columnwidth,height=3.0cm]{./images/tsukuba_3d_1}\thickspace
+				\includegraphics[width=0.3\columnwidth,height=3.0cm]{./images/tsukuba_3d_2}\thickspace
+				\includegraphics[width=0.3\columnwidth,height=3.0cm]{./images/tsukuba_3d_3}
+			\end{tabular}
+		}
+	\end{figure}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{KITTI: error de reconstrucción}
+	\vspace{-2em}
+	\begin{figure}
+		\subfloat[Imagen izquierda]{
+			\begin{tabular}[b]{c}
+				\includegraphics[width=0.45\columnwidth]{./experiments/kitti06_frame612_rgb.png}
+			\end{tabular}
+		}\thickspace
+		\subfloat[Ground-Truth]{
+			\begin{tabular}[b]{c}
+				\includegraphics[width=0.45\columnwidth]{./experiments/kitti06_frame612_gt_high50.png}
+			\end{tabular}
+		}
+	\end{figure}
+	\vspace{-2em}
+	\begin{figure}
+		\subfloat[Mapa profundidad LIBELAS]{
+			\begin{tabular}[b]{c}
+				\includegraphics[width=0.45\columnwidth]{./experiments/kitti06_frame612_libelas_depth_high50-m.png}
+			\end{tabular}
+		}\thickspace
+		\subfloat[Error mapa profundidad LIBELAS]{
+			\begin{tabular}[b]{c}
+				\includegraphics[width=0.45\columnwidth]{./experiments/kitti06_frame612_libelas_error_high50-m.png}
+			\end{tabular}
+		}
+	\end{figure}
+	\vspace{-2em}
+	\begin{figure}
+		\subfloat[Mapa profundidad S-PTAM Denso]{
+			\begin{tabular}[b]{c}
+				\includegraphics[width=0.45\columnwidth]{./experiments/kitti06_frame612_dense_high50-m.png}
+			\end{tabular}
+		}\thickspace
+		\subfloat[Error mapa profundidad S-PTAM Denso]{
+			\begin{tabular}[b]{c}
+				\includegraphics[width=0.45\columnwidth]{./experiments/kitti06_frame612_error_high50-m.png}
+			\end{tabular}
+		}
+	\end{figure}
+	\vspace{-2em}
+	\begin{figure}
+		\subfloat[]{
+			\begin{tabular}[b]{c}
+				\includegraphics[width=0.60\columnwidth]{./experiments/high50_bar.pdf}
+			\end{tabular}
+		}
+	\end{figure}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Tsukuba: error de reconstrucción}
+% tsukuba
+\begin{figure}[!htb]
+	\centering
+	\subfloat[Left image]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame807_rgb.png}%
+		\label{tsukuba_frame807_rgb}}
+	\hfil
+	\subfloat[Ground Truth]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame807_gt_high6.png}%
+		\label{tsukuba_gt}}
+    \\
+	\subfloat[LIBELAS dmap]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame807_libelas_depth_high6.png}%
+		\label{tsukuba_frame807_libelas_depth}}
+	\hfil
+	\subfloat[LIBELAS dmap error]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame807_libelas_error_high6.png}%
+		\label{tsukuba_frame807_libelas_error}}
+    \hfil
+	\subfloat[Dense S-PTAM dmap]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame807_dense_high6.png}%
+		\label{tsukuba_frame807_dense}}
+	\hfil
+	\subfloat[Dense S-PTAM dmap error]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame807_error_high6.png}%
+		\label{tsukuba_frame807_error}}
+	\\
+	\subfloat[]{\includegraphics[width=0.4\columnwidth]{./images/high6_bar.pdf}%
+		\label{tsukuba_frame807_bar}}
+	%\caption{Comparison: LIBELAS, DS-PTAM dmaps against GT (Tsukuba).}
+	\label{fig:tsukuba_frame807}
+\end{figure}
+\end{frame}
+
+%\begin{frame}
+%	\frametitle{Tsukuba: error de reconstrucción}
+%	\begin{figure}[!htb]
+%		\centering
+%		\subfloat[Left image]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_rgb.png}%
+%			\label{tsukuba_frame1314_rgb}}
+%        \hfil
+%		\subfloat[Ground Truth]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_gt_high6.png}%
+%			\label{tsukuba_frame1314_gt}}
+%        \\
+%		\subfloat[LIBELAS dmap]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_libelas_depth_high6.png}%
+%			\label{tsukuba_frame1314_libelas_depth}}
+%        \hfil
+%		\subfloat[LIBELAS dmap error]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_libelas_error_high6.png}%
+%			\label{tsukuba_frame1314_libelas_error}}
+%        \hfil
+%		\subfloat[Dense S-PTAM dmap]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_dense_high6.png}%
+%			\label{tsukuba_frame1314_dense}}
+%        \hfil
+%		\subfloat[Dense S-PTAM dmap error]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_error_high6.png}%
+%			\label{tsukuba_frame1314_error}}
+%		\\
+%		\subfloat[]{\includegraphics[width=0.4\columnwidth]{./images/high6_bar.pdf}%
+%			\label{tsukuba_frame1314_bar}}
+%		\caption{Comparison: LIBELAS, DS-PTAM dmaps against GT (Tsukuba)}
+%		\label{fig:tsukuba_frame1314}
+%	\end{figure}
+%\end{frame}
+
+%\begin{frame}
+%	\frametitle{KITTI error}
+%	\begin{figure}[!htb]
+%		\centering
+%		\includegraphics[width=0.33\columnwidth]{images/kitti06_libelas_boxplot}
+%		\caption{LIBELAS errors (depth vs errors) on KITTI sequence 06.}
+%		\label{fig:kitti06_libelas_boxplot}
+%	\end{figure}
+%	
+%	\begin{figure}[!htb]
+%		\centering
+%		\includegraphics[width=0.33\columnwidth]{images/kitti06_dense_boxplot}
+%		\caption{Dense S-PTAM errors (depth vs errors) on KITTI sequence 06.}
+%		\label{fig:kitti06_dense_boxplot}
+%	\end{figure}
+%\end{frame}
+
+\begin{frame}
+	\frametitle{KITTI: error de mediana}
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=0.8\columnwidth]{images/medians_comparison_kitti}
+%		\caption{Median error comparison between LIBELAS and dense (depth vs errors) on KITTI sequence 06.}
+		\caption{Comparación del error de mediana entre las reconstruccones obtenidas por LIBELAS y Dense en la secuencia de KITTI 06.}
+		\label{fig:median_comparison_kitti}
+	\end{figure}
+\end{frame}
+
+%\begin{frame}
+%	\frametitle{Tsukuba error}
+%	\begin{figure}[!htb]
+%		\centering
+%		\includegraphics[width=0.33\columnwidth]{images/tsukuba_libelas_boxplot}
+%		%\caption{LIBELAS raw reconstruction errors (depth vs errors) in dataset Tsukuba.}
+%		\label{fig:tsukuba_libelas_boxplot}
+%	\end{figure}
+%	\begin{figure}[!htb]
+%		\centering
+%		\includegraphics[width=0.33\columnwidth]{images/tsukuba_dense_boxplot}
+%		%\caption{Errors (depth vs errors) in dataset Tsukuba.}
+%		\label{fig:tsukuba_dense_boxplot}
+%	\end{figure}
+%\end{frame}
+
+\begin{frame}
+	\frametitle{Tsukuba: error de mediana}
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=0.8\columnwidth]{images/medians_comparison_tsukuba}
+		%\caption{Median error comparison between LIBELAS and Dense S-PTAM (depth vs errors) on Tsukuba sequence.}
+		\caption{Comparación del error de mediana entre las reconstruccones obtenidas por LIBELAS y Dense en la secuencia de Tsukuba.}
+		\label{fig:median_comparison_tsukuba}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Cantidad de puntos}
+	\begin{figure}[!htb]
+		\centering
+		\subfloat[KITTI]{\includegraphics[width=0.45\columnwidth]{./images/points_kitti06}%
+			\label{tsukuba_frame1314_rgb}}
+		\hfil
+		\subfloat[Tsukuba]{\includegraphics[width=0.45\columnwidth]{./images/points_tsukuba}%
+			\label{tsukuba_frame1314_gt}}
+	\end{figure}
+\end{frame}
+	
+%\begin{frame}
+%	\frametitle{Cantidad de puntos}
+%	\begin{figure}[!htb]
+%		\centering
+%		\includegraphics[width=\columnwidth]{images/points_kitti06}
+%		\caption{Total amount of points during the Dense S-PTAM execution (generated, discarded, present on final reconstruction---hypotheses (saw one time) and validated (fused multiple times)---, and number of fusions) on KITTI 06 sequence.}
+%		\label{fig:points_kitti}
+%	\end{figure}
+%\end{frame}
+%
+%\begin{frame}
+%	\frametitle{Cantidad de puntos}
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=\columnwidth]{images/points_tsukuba}
+%	\caption{Total amount of points during the Dense S-PTAM execution (generated, discarded, present on final reconstruction---hypotheses (saw one time) and validated (fused multiple times)---, and number of fusions) on Tsukuba sequence.}
+%	\label{fig:points_tsukuba}
+%\end{figure}
+%\end{frame}
+
+\begin{frame}
+	\frametitle{Análisis de tiempos}
+	\begin{table}[!htb]
+		\centering
+		\small
+		\begin{tabular}{cccc}
+			\toprule
+			Sequence & Disparity (ms) & Map Fusion (ms) & Map Refinement (ms) \\
+			\midrule
+			KITTI 06 & 202.66 & 124.76 & 8.00 \\
+			Tsukuba & 98.88 & 127.10 & 1.66 \\
+			\bottomrule
+		\end{tabular}
+		%\caption{Average computation times (in ms) for each of the main steps of our algorithm.}
+		\caption{Promedio de los tiempos requeridos (en ms) por cada uno de los principales pasos Dense.}
+		\label{table:table_times}
+	\end{table}
+\end{frame}
+
+\begin{frame}
+	\frametitle{S-PTAM Denso!}
+	\centering
+	
+	\inlineMovie[loop&autostart&start=5]{./videos/sptam_dense_online.mp4}{./images/kitti_3d_2}{width=\columnwidth}
+\end{frame}
+
+\begin{frame}
+	\frametitle{S-PTAM Denso!}
+	\centering
+	
+	\inlineMovie[loop&autostart&start=5]{./videos/sptam_dense_offline.mp4}{./images/kitti_3d_2}{width=\columnwidth}
+\end{frame}
+
+
+\section{Conclusiones}
+
+\begin{frame}
+	\frametitle{Conclusiones}
+	\begin{itemize}
+		\item Sistema de SLAM capaz de generar un \textbf{mapa local denso} en \textbf{tiempo real}
+        \item La precisión es útil para tareas de \textbf{navegación}
+        \item Funciona incluso en trajectorias de grandes dimensiones
+        \item Evaluado en datasets públicos: KITTI (outdoors) y Tsukuba (indoors)
+	    \item Código open-source en ROS (GPLv3)
+	    \url{https://github.com/CIFASIS/dense-sptam}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Trabajo Futuro}
+	\begin{itemize}
+		\item Tomar ventaja del módulo de cierre de ciclos (\emph{Loop Closure})
+		\item Utilizar información de apariencia para el matching de puntos
+		\item Aproximar con planos nubes de puntos referentes a superficies planas
+	\end{itemize}
+\end{frame}
+
+
+\section*{Agradecimientos}
 
 \begin{frame}
 	\centering
