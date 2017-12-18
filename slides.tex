@@ -934,23 +934,27 @@ Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los 
 	\par\end{center}
 \end{frame}
 
+
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{S-PTAM Denso!}
 	\centering
-	
 	\inlineMovie[loop&autostart&start=5]{./videos/sptam_dense_online.mp4}{./images/kitti_3d_2}{width=\columnwidth}
 \end{frame}
 
+
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{S-PTAM Denso!}
 	\centering
-	
 	\inlineMovie[loop&autostart&start=5]{./videos/sptam_dense_offline.mp4}{./images/kitti_3d_2}{width=\columnwidth}
 \end{frame}
 
 
-\section{Conclusiones}
+\section{Conclusiones y trabajos futuros}
 
+
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{Conclusiones}
 	\begin{itemize}
@@ -963,12 +967,18 @@ Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los 
 	\end{itemize}
 \end{frame}
 
+
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{Trabajo Futuro}
 	\begin{itemize}
-		\item Tomar ventaja del módulo de cierre de ciclos (\emph{Loop Closure})
-		\item Utilizar información de apariencia para el matching de puntos
-		\item Aproximar con planos nubes de puntos referentes a superficies planas
+		\item Incluir información de apariencia en la heurística.
+		\item Ampliar criterio de correspondencias a considerar un entorno alrededor del píxel proyectado.
+		\item Simplificar las nubes de puntos mediante la detección de regiones planares.
+		\item Características visuales de alto nivel: información semántica y técnicas de machine-learning.
+		\item Analizar resultados con otras librerías de disparidad y diferentes métodos de SLAM.
+		\item Experimentar sobre otros datasets.
+		\item Implementar con soporte para GPU.
 	\end{itemize}
 \end{frame}
 
