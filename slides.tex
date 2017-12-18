@@ -781,14 +781,31 @@ Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{Tsukuba: error de mediana}
+	\centering
+	Error (profundidad vs. error) en el Dataset Tsukuba.
 	\begin{figure}[!htb]
-		\centering
-		\includegraphics[width=0.8\columnwidth]{images/medians_comparison_tsukuba}
-		%\caption{Median error comparison between LIBELAS and Dense S-PTAM (depth vs errors) on Tsukuba sequence.}
-		\caption{Comparación del error de mediana entre las reconstruccones obtenidas por LIBELAS y Dense en la secuencia de Tsukuba.}
-		\label{fig:median_comparison_tsukuba}
+		\captionsetup{justification=centering}
+		\subfloat[Error en LIBELAS]{\includegraphics[width=0.48\columnwidth]{./experiments/tsukuba_libelas_boxplot.png}%
+		}
+		\hfil
+		\subfloat[Error en S-PTAM Denso]{\includegraphics[width=0.48\columnwidth]{./experiments/tsukuba_dense_boxplot.png}%
+		}
 	\end{figure}
 \end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Tsukuba: error de mediana}
+	\vspace{-2em}
+	\begin{figure}[!htb]
+		\captionsetup{justification=centering}
+		\subfloat[Comparación de mediana de error entre LIBELAS y S-PTAM Denso (profundidad vs. error) en el Dataset Tsukuba.] {
+			\includegraphics[width=0.8\columnwidth]{./experiments/medians_comparison_tsukuba.png}%
+		}
+	\end{figure}
+\end{frame}
+
 
 \begin{frame}
 	\frametitle{Cantidad de puntos}
