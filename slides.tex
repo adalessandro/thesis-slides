@@ -1,59 +1,62 @@
-% Estas slides tienen que abrirse con el programa pdfpc que soporta videos embebidos
-% el comando es: pdfpc -g slides.pdf
-% para los videos se requiere ubuntu-restricted-extras
+% Estas slides tienen que abrirse con el programa pdfpc que soporta videos embebidos. Para los videos se requiere ubuntu-restricted-extras. El comando es: pdfpc -g slides.pdf
 
-
-%\documentclass[compress,handout]{beamer}
+% compress: Encabezado muestra solo la section actual
 \documentclass[compress]{beamer}
-% compress pone la seccion abajo de todo
 \mode<presentation>
 
-
-% Theme customization
 \usetheme{Copenhagen}
 \useoutertheme{taihu}
 %\useinnertheme{rectangles}
-\setbeamertemplate{itemize item}[rectangle] % configure itemize
-\setbeamertemplate{itemize subitem}[circle] % configure itemize
-\setbeamertemplate{itemize subsubitem}[triangle] % configure itemize
-\setbeamertemplate{navigation symbols}{} % remover simbolos e navegacion de las slides
-\usefonttheme[onlymath]{serif} % simbolos matematicos en serif (Como es en latex original)
 
-\setbeamertemplate{blocks}[rounded] % blocks corners rounded
-\setbeamercolor{block body}{bg=blue!12,fg=black} % color of blocks
+% Itemize configuration
+\setbeamertemplate{itemize item}[rectangle]
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamertemplate{itemize subsubitem}[triangle]
 
-% Latex packages
+\setbeamertemplate{navigation symbols}{} % Remover símbolos de navegación
+\usefonttheme[onlymath]{serif} % Símbolos matemáticos en Serif
+
+\setbeamertemplate{blocks}[rounded] % Block corners rounded
+\setbeamercolor{block body}{bg=blue!12,fg=black} % Color of blocks
+
 \usepackage{pdfpc-commands} % pdfpc movie commands
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
-\usepackage[binary-units=true]{siunitx} % para manejar las unidades
+\usepackage[binary-units=true]{siunitx} % Para manejar las unidades
 \usepackage{multirow}
 \usepackage{multimedia}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{booktabs} % \toprule
-\usepackage[caption=false]{subfig} % caption = false elimina la palabra "Figura" del caption
-\setbeamertemplate{caption}{\raggedright\insertcaption\par} % elimina la palabra "Figura" del caption
-\usepackage{import} % para el comando import (se usa para pdf_tex)
-\captionsetup[subfigure]{labelformat=empty} % remover el indice del caption de la subfigura
 
-% add math preamble
+% Elimina la palabra 'Figura' del caption
+\usepackage[caption=false]{subfig}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+\captionsetup[subfigure]{labelformat=empty} % Remover índice del caption de la subfigura
+
+\usepackage{import} % Para el comando import (se usa para pdf_tex)
+
 \input{./math_preamble}
 
-
+\author{\textbf{Autor:} D'Alessandro, Ariel \\ \textbf{Director:} Pire, Taihú \and \textbf{Co-director}: Baravalle, Rodrigo}
 
 \setbeamerfont{title}{size=\large}
-\title{Hacia una densificación de sistemas SLAM	dispersos basados en visión estéreo}
-\author{Ariel D'Alessandro \and \underline{Taihú Pire} \and Rodrigo Baravalle}
-\institute{	CIFASIS - CONICET - UNR}
-\date{\scriptsize{Noviembre 17, 2017}}
+\title{Mapeo denso en tiempo real sobre sistemas SLAM basados en visión estéreo}
 
+\institute{FCEIA - UNR}
+\date{\scriptsize{Diciembre 22, 2017}}
 
 \begin{document}
 
 \frame{\titlepage}
 
+\begin{frame}
+\frametitle{Contenido}
+\tableofcontents
+\end{frame}
+
 \section{S-PTAM}
+
 
 \begin{frame}
 	\frametitle{S-PTAM en acción!}
