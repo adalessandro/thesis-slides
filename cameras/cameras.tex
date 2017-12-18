@@ -23,7 +23,9 @@ v
 \begin{frame}
 \frametitle{Modelo de cámara pinhole}
 
-\pnote{Llamamos rayo principal o eje principal de la cámara al rayo que se origina en el centro focal \cameraCenter y es perpendicular al plano de la imagen. El punto donde este rayo intersecta al plano de la imagen es denominado punto principal.}
+\pnote{* Rayo principal o eje principal de la cámara: rayo que se origina en el centro focal \cameraCenter y es perpendicular al plano de la imagen.}
+
+\pnote{* Punto principal: el punto donde este rayo intersecta al plano de la imagen es denominado.}
 
 \begin{block}{Cámara pinhole}
 El punto de la imagen $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$ es determinado como la intersección entre el \emph{plano de la imagen} y el rayo que une el punto del mundo 3D $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$ con el \emph{centro focal} $\cameraCenter$ de la cámara.
@@ -40,6 +42,8 @@ El punto de la imagen $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$ es 
 
 \begin{frame}
 \frametitle{Modelo de cámara pinhole}
+
+\pnote{* Proyección central: Utilizando la propiedad de semejanza de triángulos, el punto 3D es mapeado al punto en el plano de la imagen.}
 
 \begin{block}{Proyección central}
 Asumiendo el centro focal en el origen de coordenadas y el plano de la imagen $Z=f$:
@@ -69,6 +73,10 @@ fy/z
 
 \begin{frame}
 \frametitle{Modelo de cámara pinhole}
+
+\pnote{* Lo anterior asume que el origen de coordenadas del plano de la imagen se encuentra en el punto principal. En la práctica, esto no siempre se cumple.}
+
+\pnote{* Explicar representación en coordenadas homogéneas.}
 
 Siendo $\begin{bmatrix}c_{u} & c_{v}\end{bmatrix}^{\top}$ la posición del punto principal.
 \begin{equation}
@@ -117,6 +125,10 @@ z\\
 
 \begin{frame}
 \frametitle{Modelo de cámara pinhole}
+
+\pnote{* Las ecuaciones anteriores deben extenderse agregando la transformación existente entre los sistemas de coordenadas de la cámara y el mundo.}
+
+\pnote{* R es una matriz de rotación y t un vector de traslación.}
 
 Puntos expresados en referencia al sistema de coordenadas del \textit{mundo}. La cámara no se encuentra necesariamente ubicada en el centro de este.
 
