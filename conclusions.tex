@@ -1,0 +1,22 @@
+\section{Conclusiones}
+
+\begin{frame}
+	\frametitle{Conclusiones}
+	\begin{itemize}
+		\item Sistema de SLAM capaz de generar un \textbf{mapa local denso} en \textbf{tiempo real}
+        \item La precisión es útil para tareas de \textbf{navegación}
+        \item Funciona incluso en trajectorias de grandes dimensiones
+        \item Evaluado en datasets públicos: KITTI (outdoors) y Tsukuba (indoors)
+	    \item Código open-source en ROS (GPLv3)
+	    \url{https://github.com/CIFASIS/dense-sptam}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Trabajo Futuro}
+	\begin{itemize}
+		\item Tomar ventaja del módulo de cierre de ciclos (\emph{Loop Closure})
+		\item Utilizar información de apariencia para el matching de puntos
+		\item Aproximar con planos nubes de puntos referentes a superficies planas
+	\end{itemize}
+\end{frame}
