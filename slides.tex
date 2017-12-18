@@ -13,7 +13,7 @@
 \setbeamertemplate{itemize subitem}[circle]
 \setbeamertemplate{itemize subsubitem}[triangle]
 
-\setbeamertemplate{navigation symbols}{} % Remover símbolos de navegación
+%\setbeamertemplate{navigation symbols}{} % Remover símbolos de navegación
 \usefonttheme[onlymath]{serif} % Símbolos matemáticos en Serif
 
 \setbeamertemplate{blocks}[rounded] % Block corners rounded
@@ -39,6 +39,14 @@
 % Para notas personales en el pdfpc
 \usepackage{pdfpcnotes}
 
+\AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Índice}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+
 \input{./math_preamble}
 
 \author{\textbf{Autor:} D'Alessandro, Ariel \\ \textbf{Director:} Pire, Taihú \and \textbf{Co-director}: Baravalle, Rodrigo}
@@ -54,7 +62,7 @@
 \frame{\titlepage}
 
 \begin{frame}
-\frametitle{Contenido}
+\frametitle{Índice}
 \tableofcontents
 \end{frame}
 
