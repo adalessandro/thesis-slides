@@ -544,6 +544,7 @@ Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los 
 \end{frame}
 
 
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 \frametitle{Cómputo de disparidad}
 
@@ -561,6 +562,7 @@ Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los 
 \end{frame}
 
 
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{Expansión y fusión de mapa}
 	\begin{figure}[htb]
@@ -578,8 +580,11 @@ Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los 
 
 \section{Evaluación}
 
+
 \subsection{Datasets}
 
+
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{KITTI}
 	\begin{figure}
@@ -596,6 +601,8 @@ Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los 
 	\end{figure}
 \end{frame}
 
+
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{Tsukuba}
 	\begin{figure}
@@ -611,8 +618,11 @@ Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los 
 	\end{figure}
 \end{frame}
 
+
 \subsection{Resultados}
 
+
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{Reconstrucción 3D}
 	\begin{figure}
@@ -739,79 +749,36 @@ Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los 
 \end{frame}
 
 
-%\begin{frame}
-%	\frametitle{Tsukuba: error de reconstrucción}
-%	\begin{figure}[!htb]
-%		\centering
-%		\subfloat[Left image]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_rgb.png}%
-%			\label{tsukuba_frame1314_rgb}}
-%        \hfil
-%		\subfloat[Ground Truth]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_gt_high6.png}%
-%			\label{tsukuba_frame1314_gt}}
-%        \\
-%		\subfloat[LIBELAS dmap]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_libelas_depth_high6.png}%
-%			\label{tsukuba_frame1314_libelas_depth}}
-%        \hfil
-%		\subfloat[LIBELAS dmap error]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_libelas_error_high6.png}%
-%			\label{tsukuba_frame1314_libelas_error}}
-%        \hfil
-%		\subfloat[Dense S-PTAM dmap]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_dense_high6.png}%
-%			\label{tsukuba_frame1314_dense}}
-%        \hfil
-%		\subfloat[Dense S-PTAM dmap error]{\includegraphics[width=0.2\columnwidth]{./images/tsukuba_frame1314_error_high6.png}%
-%			\label{tsukuba_frame1314_error}}
-%		\\
-%		\subfloat[]{\includegraphics[width=0.4\columnwidth]{./images/high6_bar.pdf}%
-%			\label{tsukuba_frame1314_bar}}
-%		\caption{Comparison: LIBELAS, DS-PTAM dmaps against GT (Tsukuba)}
-%		\label{fig:tsukuba_frame1314}
-%	\end{figure}
-%\end{frame}
-
-%\begin{frame}
-%	\frametitle{KITTI error}
-%	\begin{figure}[!htb]
-%		\centering
-%		\includegraphics[width=0.33\columnwidth]{images/kitti06_libelas_boxplot}
-%		\caption{LIBELAS errors (depth vs errors) on KITTI sequence 06.}
-%		\label{fig:kitti06_libelas_boxplot}
-%	\end{figure}
-%	
-%	\begin{figure}[!htb]
-%		\centering
-%		\includegraphics[width=0.33\columnwidth]{images/kitti06_dense_boxplot}
-%		\caption{Dense S-PTAM errors (depth vs errors) on KITTI sequence 06.}
-%		\label{fig:kitti06_dense_boxplot}
-%	\end{figure}
-%\end{frame}
-
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{KITTI: error de mediana}
+	\centering
+	Error (profundidad vs. error) en la secuencia 06 del Dataset KITTI.
 	\begin{figure}[!htb]
-		\centering
-		\includegraphics[width=0.8\columnwidth]{images/medians_comparison_kitti}
-%		\caption{Median error comparison between LIBELAS and dense (depth vs errors) on KITTI sequence 06.}
-		\caption{Comparación del error de mediana entre las reconstruccones obtenidas por LIBELAS y Dense en la secuencia de KITTI 06.}
-		\label{fig:median_comparison_kitti}
+		\captionsetup{justification=centering}
+		\subfloat[Error en LIBELAS]{\includegraphics[width=0.48\columnwidth]{./experiments/kitti06_libelas_boxplot.png}%
+		}
+		\hfil
+		\subfloat[Error en S-PTAM Denso]{\includegraphics[width=0.48\columnwidth]{./experiments/kitti06_dense_boxplot.png}%
+		}
 	\end{figure}
 \end{frame}
 
-%\begin{frame}
-%	\frametitle{Tsukuba error}
-%	\begin{figure}[!htb]
-%		\centering
-%		\includegraphics[width=0.33\columnwidth]{images/tsukuba_libelas_boxplot}
-%		%\caption{LIBELAS raw reconstruction errors (depth vs errors) in dataset Tsukuba.}
-%		\label{fig:tsukuba_libelas_boxplot}
-%	\end{figure}
-%	\begin{figure}[!htb]
-%		\centering
-%		\includegraphics[width=0.33\columnwidth]{images/tsukuba_dense_boxplot}
-%		%\caption{Errors (depth vs errors) in dataset Tsukuba.}
-%		\label{fig:tsukuba_dense_boxplot}
-%	\end{figure}
-%\end{frame}
 
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{KITTI: error de mediana}
+	\vspace{-2em}
+	\begin{figure}[!htb]
+		\captionsetup{justification=centering}
+		\subfloat[Comparación de mediana de error entre LIBELAS y S-PTAM Denso (profundidad vs. error) en la secuencia 06 del Dataset KITTI.] {
+			\includegraphics[width=0.8\columnwidth]{./experiments/medians_comparison_kitti.png}%
+		}
+	\end{figure}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{Tsukuba: error de mediana}
 	\begin{figure}[!htb]
