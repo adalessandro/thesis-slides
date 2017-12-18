@@ -4,7 +4,7 @@
 
 % math
 \renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
-\newcommand{\norm}[1]{\lVert#1\rVert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 % Declare arg max and arg min functionss
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -42,7 +42,7 @@
 \newcommand{\previous}{\mathrm{previous}}
 \newcommand{\fusion}{\mathrm{fusion}}
 \newcommand{\inverseDepth}{\rho}
-\newcommand{\plane}{\vec{\pi}}
+\newcommand{\plane}{\boldsymbol{\pi}}
 \newcommand{\reference}{ref}
 
 
@@ -54,15 +54,16 @@
 \newcommand{\ind}[1]{\scalebox{0.7}[0.7]{$#1$}}
 
 \newcommand{\keyframe}{\vec{K}}
-\newcommand{\pointCloud}{\vec{M}}
+\newcommand{\pointCloud}{\mathcal P}
 \newcommand{\groundTruth}[1]{{#1}^{*}}
 
 \newcommand{\update}[1]{\hat{#1}}
 
+\newcommand{\position}{\vec{p}}
+\newcommand{\map}{M}
 
-
-
-
-
-
-
+\newcommand{\baseline}{b}
+\newcommand{\focalDistance}{f}
+\newcommand{\disparityMap}{\mathcal D}
+\newcommand{\camera}{c}
+\newcommand{\ray}{n}

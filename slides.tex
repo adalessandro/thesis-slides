@@ -13,11 +13,11 @@
 \setbeamertemplate{itemize subitem}[circle]
 \setbeamertemplate{itemize subsubitem}[triangle]
 
-%\setbeamertemplate{navigation symbols}{} % Remover símbolos de navegación
+\setbeamertemplate{navigation symbols}{} % Remover símbolos de navegación
 \usefonttheme[onlymath]{serif} % Símbolos matemáticos en Serif
 
 \setbeamertemplate{blocks}[rounded] % Block corners rounded
-\setbeamercolor{block body}{bg=blue!12,fg=black} % Color of blocks
+\setbeamercolor{block body}{bg=blue!8,fg=black} % Color of blocks
 
 \usepackage{pdfpc-commands} % pdfpc movie commands
 \usepackage[utf8]{inputenc}
@@ -51,7 +51,9 @@
 
 \author{\textbf{Autor:} D'Alessandro, Ariel \\ \textbf{Director:} Pire, Taihú \and \textbf{Co-director}: Baravalle, Rodrigo}
 
-\setbeamerfont{title}{size=\large}
+\setbeamerfont{normal text}{size*={10}{10}}
+\AtBeginDocument{\usebeamerfont{normal text}}
+
 \title{Mapeo denso en tiempo real sobre sistemas SLAM basados en visión estéreo}
 
 \institute{FCEIA - UNR}
