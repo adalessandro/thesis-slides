@@ -6,7 +6,7 @@
 
 \usetheme{Copenhagen}
 \useoutertheme{taihu}
-%\useinnertheme{rectangles}
+\useinnertheme{rectangles}
 
 % Itemize configuration
 \setbeamertemplate{itemize item}[rectangle]
@@ -17,7 +17,7 @@
 \usefonttheme[onlymath]{serif} % Símbolos matemáticos en Serif
 
 \setbeamertemplate{blocks}[rounded] % Block corners rounded
-\setbeamercolor{block body}{bg=blue!8,fg=black} % Color of blocks
+\setbeamercolor{block body}{bg=blue!12,fg=black} % Color of blocks
 
 \usepackage{pdfpc-commands} % pdfpc movie commands
 \usepackage[utf8]{inputenc}
@@ -49,15 +49,14 @@
 
 \input{./math_preamble}
 
-\author{\textbf{Autor:} D'Alessandro, Ariel \\ \textbf{Director:} Pire, Taihú \and \textbf{Co-director}: Baravalle, Rodrigo}
-
 \setbeamerfont{normal text}{size*={10}{10}}
 \AtBeginDocument{\usebeamerfont{normal text}}
 
 \title{Mapeo denso en tiempo real sobre sistemas SLAM basados en visión estéreo}
-
-\institute{FCEIA - UNR}
-\date{\scriptsize{Diciembre 22, 2017}}
+\author{Ariel D'Alessandro}
+\institute{Director: Taihú Pire. Co-Director: Rodrigo Baravalle. \\ \vspace{0.5cm} Tesina de Grado \\ Licenciatura en Ciencias de la Computación \\ FCEIA - UNR}
+\titlegraphic{\includegraphics[width=0.14\textwidth]{images/logo-unr.png}}
+\date{\scriptsize{22 de diciembre de 2017}}
 
 \begin{document}
 
@@ -70,6 +69,9 @@
 
 
 \section{Introducción}
+
+
+\subsection{Presentación}
 
 
 \begin{frame}
@@ -111,6 +113,9 @@ Método de reconstrucción 3D o mapeo denso en tiempo real sobre sistemas de loc
 \end{frame}
 
 
+\subsection{SLAM}
+
+
 \begin{frame}
 \frametitle{SLAM - Simultaneous Localisation and Mapping}
 
@@ -128,6 +133,9 @@ Método de reconstrucción 3D o mapeo denso en tiempo real sobre sistemas de loc
 \end{figure}
 
 \end{frame}
+
+
+\subsection{SLAM Visual}
 
 
 \begin{frame}
@@ -163,7 +171,11 @@ Método de reconstrucción 3D o mapeo denso en tiempo real sobre sistemas de loc
 
 \end{frame}
 
-\section{Cámaras como sensores}
+
+\section{Conceptos básicos}
+
+
+\subsection{Cámaras}
 
 
 \begin{frame}
@@ -237,184 +249,6 @@ fy/z
 
 
 \begin{frame}
-\frametitle{Modelo de cámara pinhole}
-
-\pnote{* Lo anterior asume que el origen de coordenadas del plano de la imagen se encuentra en el punto principal. En la práctica, esto no siempre se cumple.}
-
-\pnote{* Explicar representación en coordenadas homogéneas.}
-
-Siendo $\begin{bmatrix}c_{u} & c_{v}\end{bmatrix}^{\top}$ la posición del punto principal.
-\begin{equation}
-\begin{bmatrix}x\\
-y\\
-z
-\end{bmatrix}\longmapsto\begin{bmatrix}fx/z+c_{u}\\
-fy/z+c_{v}
-\end{bmatrix}
-\end{equation}
-
-En coordenadas homogéneas:
-
-\begin{equation}
-\begin{bmatrix}x\\
-y\\
-z\\
-1
-\end{bmatrix}\longmapsto\begin{bmatrix}fx+zc_{u}\\
-fy+zc_{v}\\
-z
-\end{bmatrix}=\begin{bmatrix}f &  & c_{u} & 0\\
- & f & c_{v} & 0\\
- &  & 1 & 0
-\end{bmatrix}\begin{bmatrix}x\\
-y\\
-z\\
-1
-\end{bmatrix}
-\end{equation}
-
-\begin{block}{Matriz de calibración intrínseca $\intrinsicMatrix$}
-\begin{equation}
-\intrinsicMatrix=\begin{bmatrix}f & 0 & c_{u}\\
-0 & f & c_{v}\\
-0 & 0 & 1
-\end{bmatrix}
-\end{equation}
-\begin{equation}
-\homo{\imagePoint}=\intrinsicMatrix\begin{bmatrix}\vec{{I}} & \vec{{0}}\end{bmatrix}\homo{\point}
-\end{equation}
-\end{block}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Modelo de cámara pinhole}
-
-\pnote{* Las ecuaciones anteriores deben extenderse agregando la transformación existente entre los sistemas de coordenadas de la cámara y el mundo.}
-
-\pnote{* R es una matriz de rotación y t un vector de traslación.}
-
-Puntos expresados en referencia al sistema de coordenadas del \textit{mundo}. La cámara no se encuentra necesariamente ubicada en el centro de este.
-
-\begin{figure}[!htb]
-	\centering
-	\subfloat[]{\includegraphics[width=0.4\columnwidth]{./cameras/camera_coord_system.pdf}}%
-	\hfill
-\end{figure}
-
-\begin{block}{}
-\begin{equation}
-\homoCameraPoint=\begin{bmatrix}\rotation & \translation\\
-0 & 1
-\end{bmatrix}\begin{bmatrix}x\\
-y\\
-z\\
-1
-\end{bmatrix}=\seMatrix^{\mathrm{c}\mathrm{w}}\homoWorldPoint\;.
-\end{equation}
-\end{block}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Modelo de cámara pinhole}
-
-De esta manera, es posible proyectar cualquier punto 3D
-$\homoWorldPoint$ en el sistema de coordenadas del mundo al correspondiente
-punto $\homo{\imagePoint}$ en el plano de la imagen mediante:
-
-\begin{block}{Matriz de proyección \textmd{$\projectionMatrix$}}
-\begin{equation}
-\projectionMatrix=\intrinsicMatrix\begin{bmatrix}\rotation & \translation\end{bmatrix}
-\end{equation}
-\begin{equation}
-\homo{\imagePoint}=\projectionMatrix\homoWorldPoint
-\end{equation}
-\end{block}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Modelo de cámara estéreo}
-
-\begin{block}{Geometría epipolar}
-
-\pnote{* La geometría proyectiva intrínseca entre dos cámaras es conocida como geometría epipolar.}
-
-\pnote{* Esta es independiente de la escena observada y depende únicamente de los parámetros internos geometría epipolar y las posiciones relativas de las cámaras involucradas.}
-
-Cualquier punto 3D $\point$ en el espacio, sus proyecciones $\imagePoint$ y $\imagePoint^{\prime}$ en los planos de las imágenes y los centros focales de las cámaras, pertenecen a un mismo plano $\vec{\pi}$.
-De manera análoga, los rayos re-proyectados desde $\imagePoint$ y $\imagePoint^{\prime}$ se intersectan en $\point$, son coplanares y yacen sobre $\vec{\pi}$.
-\end{block}
-
-\begin{figure}[!htb]
-	\centering
-	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pencil_of_planes.pdf}}%
-	\hfill
-	\centering
-	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/epipolar_plane.pdf}}%
-	\hfill
-\end{figure}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Modelo de cámara estéreo}
-
-\pnote{* La búsqueda del correspondiente al punto u no necesita cubrir el plano de la imagen completo sino que puede restringirse a la línea epipolar l.}
-
-\pnote{* La línea epipolar es generada por la proyección del rayo, re-proyectado desde u, sobre el plano focal de la segunda imagen.}
-
-Búsqueda de correspondencias sobre la línea epipolar.
-
-\begin{figure}[!htb]
-	\centering
-	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/epipolar_line.pdf}}%
-	\hfill
-\end{figure}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Rectificación estéreo}
-
-\pnote{* Luego de aplicar rectificación estéreo, la búsqueda de correspondencias entre las imágenes es reducida a una búsqueda unidimensional, sobre la misma fila.}
-
-\begin{itemize}
-\item Proyectar el par de imágenes estéreo sobre un plano de imagen común.
-\item Los puntos correspondientes se encuentren alineados en la misma fila.
-\end{itemize}
-
-\begin{figure}[!htb]
-	\centering
-	\subfloat[]{\includegraphics[width=0.6\columnwidth]{./cameras/stereo_rectification.pdf}}%
-	\hfill
-\end{figure}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Rectificación estéreo}
-
-\pnote{* Rectificación estéreo sobre un par de imágenes del Dataset Level 7 [32]. (a) Par de imágenes estéreo original provisto por la cámara estéreo.}
-\pnote{* (b) El par de imágenes estéreo luego de ser rectificadas. Las líneas rojas asocian algunos puntos correspondientes entre ambas imágenes. Notar que estos puntos se encuentran en la misma fila en ambas imágenes.}
-
-\begin{figure}[!htb]
-	\centering
-	\subfloat[]{\includegraphics[width=0.6\columnwidth]{./cameras/no_rectified_stereo_images.png}}%
-	\hfill
-	\\
-	\centering
-	\subfloat[]{\includegraphics[width=0.6\columnwidth]{./cameras/rectified_stereo_images.png}}%
-	\hfill
-\end{figure}
-\end{frame}
-
-
-\begin{frame}
 \frametitle{Triangulación estéreo}
 
 \pnote{* Sea x = x y z un punto 3D cuyas coordenadas son desconocidas. Conociendo las proyecciones correspondientes, la posición del punto x puede ser derivada.}
@@ -466,6 +300,9 @@ z=\frac{bf}{u_{l}-u_{r}}\;
 \end{frame}
 
 
+\subsection{Disparidad}
+
+
 \begin{frame}
 \frametitle{Disparidad}
 
@@ -483,97 +320,114 @@ d=u_{l}-u_{r}=\frac{bf}{z}
 \end{frame}
 
 
-\section{Método}
+\section{S-PTAM Denso}
 
 
-\begin{frame}
-\frametitle{S-PTAM}
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=1.0\columnwidth]{method/portada-sptam-kitti-video.pdf}
-	\hfill
-\end{figure}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{S-PTAM}
-
-\begin{itemize}
-\item Sistema SLAM basado en features.
-\item Cámara estéreo como sensor principal.
-\item Construye y mantiene un mapa disperso del entorno.
-\item Basado en keyframes.
-\end{itemize}
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=0.8\columnwidth]{method/sptam_kitti.png}
-\end{figure}
-
-\end{frame}
-
-
-\begin{frame}
-
-\frametitle{Dense S-PTAM}
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=1.0\columnwidth]{method/metodo-diagram.pdf}
-	\hfill
-\end{figure}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Cómputo de disparidad}
-
-\begin{block}{LIBELAS (Library for Efficient Large-scale Stereo Matching)}
-\begin{itemize}
-\item Andreas Geiger, Julius Ziegler, and Christoph Stiller. StereoScan: Dense 3d reconstruction in real-time. In \textit{2011 IEEE Intelligent Vehicles Symposium (IV)}, pages 963-968, June 2011.
-\item Librería multiplataforma de código abierto para computar mapas de disparidad a partir de pares de imágenes estéreo rectificadas de alta resolución.
-\end{itemize}
-\end{block}
-
-\begin{block}{Definición - Mapa de disparidad}
-Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los píxeles en el plano de la imagen a su correspondiente valor de disparidad. Denominaremos $\disparityMap_{j}$ a la función que representa el mapa de disparidad generado a partir del par de imágenes estéreo del \emph{keyframe} $\keyframe_{j}$.
-\end{block}
-
-\end{frame}
+\subsection{S-PTAM}
 
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-\frametitle{Cómputo de disparidad}
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=0.5\columnwidth]{method/libelas_merge_kitti04_22.jpg}
-	\caption{Mapa de disparidad LIBELAS - Dataset KITTI.}
-\end{figure}
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=0.5\columnwidth]{method/libelas_merge_tsukuba_222.jpg}
-	\caption{Mapa de disparidad LIBELAS - Dataset Tsukuba.}
-\end{figure}
-
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{Expansión y fusión de mapa}
+	\frametitle{S-PTAM}
 	\begin{figure}[htb]
 		\centering
-		\includegraphics[width=\columnwidth]{images/map_fusion.pdf}
+		\includegraphics[width=1.0\columnwidth]{method/portada-sptam-kitti-video.pdf}
+		\hfill
 	\end{figure}
+
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+    \frametitle{S-PTAM: Stereo Parallel Tracking and Mapping}
+    Características:
+    \begin{itemize}
+    	\item Sensor: Cámara estéreo
+		\item Construye y mantiene un mapa disperso del entorno.
+		\item Basado en keyframes.
+        \item Sistema SLAM basado en features.
+        \item Fuertemente paralelizado: tracking, local mapping y loop closing.
+        \item Real-time incluso en trayectorias largas.
+        \item Código open-source en ROS (GPLv3) \url{https://github.com/lrse/sptam}
+    \end{itemize}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+    \frametitle{S-PTAM en acción!}
+    TODO: Agregar video de S-PTAM.
+\end{frame}
+
+
+\subsection{Funcionamiento}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+
+	\frametitle{S-PTAM Denso}
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=1.0\columnwidth]{method/metodo-diagram.pdf}
+		\hfill
+	\end{figure}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Mapa de disparidad}
+
+	\begin{itemize}
+		\item Computa mapa de disparidad del \emph{keyframe} actual $\keyframe_{j}$.
+	\end{itemize}
 	
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=0.4\columnwidth]{method/libelas_merge_kitti04_22.jpg}
+		\caption{Mapa de disparidad LIBELAS - Dataset KITTI.}
+	\end{figure}
+
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=0.4\columnwidth]{method/libelas_merge_tsukuba_222.jpg}
+		\caption{Mapa de disparidad LIBELAS - Dataset Tsukuba.}
+	\end{figure}
+
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Expansión y fusión de mapa: Frustrum culling}
+	
+	\begin{itemize}
+		\item Utilizando mapa de disparidad y posición del \emph{keyframe} actual $\keyframe_{j}$.
+		\item \emph{Mapa local} a $\keyframe_{j}$: últimas $J$ \emph{nubes de puntos} $\left\{ \pointCloud_{j-J},\hdots,\pointCloud_{j}\right\}$.
+		\item Aplicando \emph{Frustum culling} para filtrar puntos no-visibles desde $\keyframe_{j}$.
+	\end{itemize}
+	
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=0.6\columnwidth]{method/frustum_culling.pdf}
+	\end{figure}
+
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Expansión y fusión de mapa: Heurística de fusión}
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=\columnwidth]{method/metodo-fusion-spa.pdf}
+	\end{figure}
 	\begin{equation*}
-		\point_{\mathrm{\fusion}} = \dfrac{1}{\inverseDepth_\mathrm{\fusion}} \dfrac{\point_{\mathrm{\current}}}{\norm{\point_{\mathrm{\current}}}}
+		\point_{fusi\acute{o}n}=\frac{1}{\inverseDepth_{fusi\acute{o}n}}\frac{\point_{actual}}{\norm{\point_{actual}}}
 		\quad \text{donde} \quad 
-		\inverseDepth_{\fusion} = \dfrac{\inverseDepth_{\current} + \inverseDepth_{\previous}}{2}
+		\inverseDepth_{fusi\acute{o}n}=\frac{\inverseDepth_{actual}+\inverseDepth_{previo}}{2}
 	\end{equation*}
 \end{frame}
 
@@ -616,6 +470,12 @@ Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los 
 			\end{tabular}
 		}
 	\end{figure}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Ground truth - Mapas de profundidad}
 \end{frame}
 
 
