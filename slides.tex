@@ -175,55 +175,34 @@
 \end{frame}
 
 
-\section{Conceptos básicos}
-
-
-\subsection{Cámaras}
+\subsection{Conceptos básicos}
 
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-\frametitle{Modelo de cámara}
+	\frametitle{Modelo de cámara pinhole}
 
-\begin{block}{Definición - Cámara}
-Una cámara es definida matemáticamente como una correspondencia entre el mundo 3D y una imagen 2D. Es decir, un mapeo entre puntos del mundo 3D $\point$ y puntos de la imagen $\imagePoint$:
-\begin{equation}
-\point=\begin{bmatrix}x\\
-y\\
-z
-\end{bmatrix}\longmapsto
-\imagePoint=\begin{bmatrix}u\\
-v
-\end{bmatrix}
-\end{equation}
-\end{block}
+	\begin{block}{Definición - Cámara}
+		Una cámara es definida matemáticamente como un mapeo entre puntos del mundo 3D y puntos de la imagen (píxeles).
+	\end{block}
+
+	\begin{block}{Cámara pinhole}
+		El punto de la imagen $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$ es determinado como la intersección entre el \emph{plano de la imagen} y el rayo que une el punto del mundo 3D $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$ con el \emph{centro focal} $\cameraCenter$ de la cámara.
+	\end{block}
+
+	\vspace{-0.5em}
+	\begin{figure}[!htb]
+		\centering
+		\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pinhole_camera_model.pdf}}%
+		\hfill
+	\end{figure}
 
 \end{frame}
 
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-\frametitle{Modelo de cámara pinhole}
-
-\begin{block}{Cámara pinhole}
-El punto de la imagen $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$ es determinado como la intersección entre el \emph{plano de la imagen} y el rayo que une el punto del mundo 3D $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$ con el \emph{centro focal} $\cameraCenter$ de la cámara.
-\end{block}
-
-\begin{figure}[!htb]
-	\centering
-	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pinhole_camera_model.pdf}}%
-	\hfill
-\end{figure}
-
-\end{frame}
-
-
-\subsection{Geometría estéreo}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{Triangulación estéreo}
+	\frametitle{Geometría estéreo}
 
     \begin{align*}
         \point&=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}
@@ -250,7 +229,7 @@ El punto de la imagen $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$ es 
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{Disparidad}
+	\frametitle{Geometría estéreo}
 
 	\begin{block}{Definición - Disparidad}
 		Distancia existente entre las proyecciones de las diferentes cámaras.
