@@ -1,3 +1,137 @@
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+\frametitle{Modelo de cámara}
+
+\begin{block}{Definición - Cámara}
+Una cámara es definida matemáticamente como una correspondencia entre el mundo 3D y una imagen 2D. Es decir, un mapeo entre puntos del mundo 3D $\point$ y puntos de la imagen $\imagePoint$:
+\begin{equation}
+\point=\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}\longmapsto
+\imagePoint=\begin{bmatrix}u\\
+v
+\end{bmatrix}
+\end{equation}
+\end{block}
+
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+\frametitle{Modelo de cámara pinhole}
+
+\begin{block}{Cámara pinhole}
+El punto de la imagen $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$ es determinado como la intersección entre el \emph{plano de la imagen} y el rayo que une el punto del mundo 3D $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$ con el \emph{centro focal} $\cameraCenter$ de la cámara.
+\end{block}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pinhole_camera_model.pdf}}%
+	\hfill
+\end{figure}
+
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+\frametitle{Modelo de cámara pinhole}
+
+\begin{block}{Proyección central}
+Asumiendo el centro focal en el origen de coordenadas y el plano de la imagen $Z=f$:
+
+\begin{equation}
+\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}\longmapsto\begin{bmatrix}fx/z\\
+fy/z
+\end{bmatrix}
+\end{equation}
+
+\end{block}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pinhole_camera_model.pdf}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pinhole_camera_model2.pdf}}%
+	\hfill
+\end{figure}
+
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+\frametitle{Triangulación estéreo}
+
+Proyecciones correspondientes $\imagePoint_{l}=\begin{bmatrix}u_{l} & v_{l}\end{bmatrix}$ y $\imagePoint_{r}=\begin{bmatrix}u_{r} & v_{r}\end{bmatrix}$ sobre los planos focales de la imagen izquierda y derecha respectivamente,
+la posición del punto $\point$ puede ser derivada.
+
+\begin{equation}
+\frac{b}{z}=\frac{(b+u_{r})-u_{l}}{z-f}
+\end{equation}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation.pdf}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation2.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+\frametitle{Triangulación estéreo}
+
+\begin{equation}
+\frac{x}{z}=\frac{u_{l}-c_{u}}{f}\qquad\frac{y}{z}=\frac{v_{l}-c_{v}}{f}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}x=\frac{(u_{l}-c_{u})z}{f}\;\qquad
+y=\frac{(v_{l}-c_{v})z}{f}\;\qquad
+z=\frac{bf}{u_{l}-u_{r}}\;
+\end{aligned}
+\end{equation}
+
+\begin{figure}[!htb]
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation.pdf}}%
+	\hfill
+	\centering
+	\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation2.pdf}}%
+	\hfill
+\end{figure}
+\end{frame}
+
+
+\subsection{Disparidad}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+\frametitle{Disparidad}
+
+\begin{block}{Definición - Disparidad}
+La disparidad $d$ es definida como la distancia existente entre las proyecciones de las diferentes cámaras.
+\begin{equation}
+d=u_{l}-u_{r}=\frac{bf}{z}
+\end{equation}
+\end{block}
+
+\textbf{Nota}: la profundidad $z$ es inversamente proporcional a la disparidad $d$.
+
+\end{frame}
+
 \begin{frame}
 \frametitle{Modelo de cámara pinhole}
 
