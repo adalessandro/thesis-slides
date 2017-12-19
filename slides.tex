@@ -958,12 +958,13 @@ Función $\disparityMap:\mathbb{R}^{2}\mathbb{\rightarrow R}^{+}$ que mapea los 
 \begin{frame}
 	\frametitle{Conclusiones}
 	\begin{itemize}
-		\item Sistema de SLAM capaz de generar un \textbf{mapa local denso} en \textbf{tiempo real}
-        \item La precisión es útil para tareas de \textbf{navegación}
-        \item Funciona incluso en trajectorias de grandes dimensiones
-        \item Evaluado en datasets públicos: KITTI (outdoors) y Tsukuba (indoors)
-	    \item Código open-source en ROS (GPLv3)
-	    \url{https://github.com/CIFASIS/dense-sptam}
+		\item Sistema de SLAM capaz de generar un \textbf{mapa local denso} en \textbf{tiempo real}.
+	    \item Explota paralelismo.
+        \item La precisión es útil para tareas de \textbf{navegación}.
+        \item Funciona incluso en trajectorias de grandes dimensiones.
+        \item Evaluado en datasets públicos: KITTI (outdoors) y Tsukuba (indoors).
+	    \item Código open-source en ROS (GPLv3) \url{https://github.com/CIFASIS/dense-sptam}
+	    \item Nodo ROS reutilizable, desacoplado del sistema de SLAM disperso.
 	\end{itemize}
 \end{frame}
 
