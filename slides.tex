@@ -446,6 +446,64 @@ d=u_{l}-u_{r}=\frac{bf}{z}
 \end{frame}
 
 
+\subsection{Implementación}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{ROS: Robot Operating System}
+    \begin{figure}[htb]
+        \centering
+        \includegraphics[width=0.55\columnwidth]{method/ros.png}
+    \end{figure}
+	\vspace{-2em}
+    \begin{itemize}
+ 		\item Conjunto de frameworks para desarrollo de software en robótica.
+        \item Abstracción del hardware.
+        \item Control de dispositivos de bajo nivel.
+        \item Arquitectura:
+            \begin{itemize}
+	        	\item Cada nodo es una unidad de ejecución.
+	        	\item Comunicación entre nodos mediante mensajes.
+	        \end{itemize}
+        \item Mantenimiento de paquetes.
+        \item Utilizado en la comunidad robótica.
+    \end{itemize}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{ROS: Robot Operating System}
+	
+	\begin{figure}[htb]
+		\subfloat[] {
+			\begin{tabular}[b]{c}
+				\centering
+				$\vcenter{\hbox{\includegraphics[width=0.15\columnwidth]{./method/opencv.png}}}$
+				\hspace{1em}
+				$\vcenter{\hbox{\includegraphics[width=0.25\columnwidth]{./method/ros.png}}}$
+				\hspace{1em}
+				$\vcenter{\hbox{\includegraphics[width=0.25\columnwidth]{./method/pcl.png}}}$
+			\end{tabular}
+		}
+	\end{figure}
+	
+	\vspace{-2em}
+	\begin{itemize}
+		\item Implementado como un nodo ROS.
+		\item Código fuente disponible públicamente bajo licencia (GPLv3) \url{https://github.com/CIFASIS/dense-sptam}.
+		\item Librerías:
+		\begin{itemize}
+			\item OpenCV: manejo y codificación de imágenes.
+			\item Point Cloud Library (PCL): manejo de nubes de puntos.
+			\item LIBELAS: cómputo de mapas de disparidad.
+		\end{itemize}
+		\item Compuesto de 3 hilos de ejecución paralela.
+    \end{itemize}
+\end{frame}
+
+
 \section{Evaluación}
 
 
