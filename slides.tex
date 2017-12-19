@@ -278,8 +278,8 @@
     \begin{itemize}
     	\item Sensor: Cámara estéreo
 		\item Construye y mantiene un mapa disperso del entorno.
-		\item Basado en keyframes.
         \item Sistema SLAM basado en features.
+		\item Basado en keyframes.
         \item Fuertemente paralelizado: tracking, local mapping y loop closing.
         \item Real-time incluso en trayectorias largas.
         \item Código open-source en ROS (GPLv3) \url{https://github.com/lrse/sptam}
@@ -335,11 +335,12 @@
 % Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{Expansión y fusión de mapa: Frustrum culling}
-	
 	\begin{itemize}
-		\item Utilizando mapa de disparidad y posición del \emph{keyframe} actual $\keyframe_{j}$.
-		\item \emph{Mapa local} a $\keyframe_{j}$: últimas $J$ \emph{nubes de puntos} $\left\{ \pointCloud_{j-J},\hdots,\pointCloud_{j}\right\}$.
-		\item Aplicando \emph{Frustum culling} para filtrar puntos no-visibles desde $\keyframe_{j}$.
+		\item Empleando la posición del keyframe $\keyframe_{j}$ se proyecta el \emph{mapa local}: últimas $J$ \emph{nubes de puntos} $\left\{ \pointCloud_{j-J},\hdots,\pointCloud_{j-1}\right\}$.
+		\begin{itemize}
+			\item Aplicando \emph{Frustum culling} para filtrar puntos no-visibles.
+		\end{itemize}
+	\item Utilizando el mapa de disparidad del \emph{keyframe} actual $\keyframe_{j}$ se buscan correspondencias.
 	\end{itemize}
 	
 	\begin{figure}[htb]
@@ -380,7 +381,7 @@
 	Swap a memoria secundaria:
 	\begin{itemize}
 		\item Nubes de puntos en RAM hasta que salen del \emph{mapa local}.
-		\item Permite secuencias de extensa longitud.
+		\item Permite correr en secuencias de extensa longitud.
 	\end{itemize}
 
 \end{frame}
@@ -529,16 +530,15 @@
 	\frametitle{Análisis del error}
 	
 	\vspace{-1em}
-	\pause{}
 	Experimentos:
 	\begin{itemize}
 		\item Comparación de \emph{mapas de profundidad}.
 		\item A cada píxel se le asigna el valor de profundidad del punto 3D proyectado.
 		\item Generamos un mapa de profundidad para cada keyframe utilizando:
 		\begin{itemize}
-			\item \emph{Ground truth}.
 			\item S-PTAM Denso: proyectando la nubes de puntos global.
 			\item LIBELAS: mapa de disparidad.
+			\item \emph{Ground truth} (ver abajo).
 		\end{itemize}
 	\end{itemize}
 
@@ -853,16 +853,7 @@
 % Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{S-PTAM Denso!}
-	\centering
-	\inlineMovie[loop&autostart&start=5]{./videos/sptam_dense_online.mp4}{./images/kitti_3d_2}{width=\columnwidth}
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{S-PTAM Denso!}
-	\centering
-	\inlineMovie[loop&autostart&start=5]{./videos/sptam_dense_offline.mp4}{./images/kitti_3d_2}{width=\columnwidth}
+	TODO: Agregar video de S-PTAM.
 \end{frame}
 
 
