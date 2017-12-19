@@ -64,6 +64,8 @@
 
 \frame{\titlepage}
 
+
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 \frametitle{Índice}
 \tableofcontents
@@ -73,66 +75,75 @@
 \section{Introducción}
 
 
-\subsection{Presentación}
+\subsection{Motivación}
 
 
+% Frame ---------------------------------------------------------------------
 \begin{frame}
-\frametitle{Motivación}
-
-\begin{block}{Objetivo a desarrollar}
-Método de reconstrucción 3D o mapeo denso en tiempo real sobre sistemas de localización y mapeo simultáneo (SLAM) basado en visión estéreo.
-\end{block}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Reconstrucción 3D}
-
-\pnote{* Reconstrucción 3D: Proceso mediante el cual se captura y representa la forma y apariencia de entornos u objetos presentes en la realidad. Diseño asistido por computadora, imágenes médicas, realidad virtual y aumentada, robótica movil, entre otros.}
-
-\pnote{* Uno de los principales problemas presentes en aplicaciones relativas a robots autónomos móviles consiste en el planeamiento de una trayectoria segura hacia determinados objetivos, mientras el robot se desplaza a través de un entorno potencialmente desconocido.}
-
-\pnote{* Para esto, resulta necesario contar con una representación del ambiente que se está transitando (mapa) y la ubicación del robot dentro del mismo (SLAM - slide siguiente).}
-
-\pnote{* El mapa debe ser suficientemente detallado (denso) para que el robot pueda realizar un planeamiento seguro, evitando posibles obstáculos.}
-
-\begin{figure}[!htb]
-	\centering
-	\subfloat[]{\includegraphics[width=0.30\columnwidth]{./introduction/3d-skull.jpg}}%
-	\hfill
-	\subfloat[]{\includegraphics[width=0.30\columnwidth]{./introduction/3d-dinosaur.jpg}}%
-	\hfill
-	\centering
-	\subfloat[]{\includegraphics[width=0.40\columnwidth]{./introduction/3d-indoor.jpg}}%
-	\hfill
-	\\
-	\centering
-	\subfloat[]{\includegraphics[width=0.70\columnwidth]{./introduction/3d-building.png}}%
-	\hfill
-\end{figure}
-
+	\frametitle{Motivación}
+	
+	Problema de la robótica móvil
+	\begin{itemize}
+		\item Planeamiento de una trayectoria segura hacia determinados objetivos.
+		\item Debe hacerse a medida que el robot se desplaza a través de un entorno potencialmente desconocido.
+		\item Para esto resulta necesario contar con:
+		\begin{itemize}
+			\item Una representación del ambiente que se está transitando (mapa).
+			\item La ubicación del robot dentro de este mapa.
+			\item El mapa debe ser lo suficientemente detallado (denso) para que el robot pueda realizar un planeamiento seguro, evitando posibles obstáculos.
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 
 
 \subsection{SLAM}
 
 
+% Frame ---------------------------------------------------------------------
 \begin{frame}
-\frametitle{SLAM - Simultaneous Localisation and Mapping}
+	\frametitle{SLAM: Simultaneous Localization and Mapping}
+    \begin{itemize}
+        \item ¿Qué es SLAM?
+        \begin{itemize}
+            \item Localización y Mapeo Simultáneos.
+        \end{itemize}
+        \item ¿Por qué es importante en la robótica móvil? 
+    \end{itemize}
 
-\pnote{* A partir de la detección y seguimiento de marcas naturales del ambiente (landmarks), los sistemas de SLAM pueden estimar tanto la posición del robot como la ubicación de estas marcas en el entorno. El mapa es construído incrementalmente con las posiciones estimadas de dichas marcas, las cuales son ajustadas a lo largo de la trayectoria a medida que son observadas.}
+    \begin{itemize}
+            \item Tipos de sensores
+            \begin{itemize}
+                \item Cámaras.
+				\item Sonares.
+				\item Láser.
+				\item GPS.
+				\item Sensores RGB-D.
+				\item IMU.
+				\item Encoders.
+            \end{itemize}
+    \end{itemize}
 
-\begin{itemize}
-\item Construir incrementalmente un mapa del entorno.
-\item Determinar su posición y orientación en el mismo.
-\end{itemize}
+\end{frame}
 
-\begin{figure}[!htb]
-	\centering
-	\subfloat[]{\includegraphics[width=0.50\columnwidth]{./introduction/slam-landmarks.pdf}}%
-	\hfill
-\end{figure}
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{SLAM - Simultaneous Localisation and Mapping}
+
+	\begin{itemize}
+        \item Sensores permiten detectar marcas naturales (\textbf{landmarks})
+        \begin{itemize}
+            \item El robot determina su posición y orientación en base a estas.
+            \item Construye incrementalmente un mapa del entorno, ubicando estas marcas en el mismo.
+        \end{itemize}
+    \end{itemize}
+
+	\vspace{-1em}
+	\begin{figure}[!htb]
+		\centering
+		\subfloat[]{\includegraphics[width=0.6\columnwidth]{./introduction/slam-landmarks.pdf}}
+		\hfill
+	\end{figure}
 
 \end{frame}
 
@@ -140,37 +151,27 @@ Método de reconstrucción 3D o mapeo denso en tiempo real sobre sistemas de loc
 \subsection{SLAM Visual}
 
 
+% Frame ---------------------------------------------------------------------
 \begin{frame}
-\frametitle{SLAM Visual - Cámaras}
-
-\pnote{* Cámaras: rica información de la escena. Ventajas: bajo costo, menor consumo energético en comparación con otros sensores, como lásers, portabilidad y alta disponibilidad en dispositivos móviles. Son sensores pasivos por lo que no interferen con otros sensores y pueden utilizarse en entornos interiores, donde el uso de GPS puede verse imposibilitado. Asímismo, son menos restrictivos que los encoders, los cuales se encuentran limitados a robots terrestres y resultan imprecisos en terrenos irregulares.}
-
-\begin{itemize}
-\item Bajo costo.
-\item Bajo consumo energético.
-\item Alta disponibilidad en dispositivos móviles.
-\item Sensores pasivos.
-\item Apto entornos interiores.
-\item Apto terrenos irregulares.
-\end{itemize}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{SLAM Visual - Cámaras estéreo}
-
-\pnote{* Cámaras estéreo: Existen dos enfoques predominantes en los sistemas de SLAM basados en cámaras, denominados monocular y estéreo. Los sistemas de SLAM visual estéreo proveen información sobre la profundidad de los píxeles mediante una única observación, lo cual requiere mayor número de cómputos en el caso monocular.}
-
-\begin{figure}[!htb]
-	\centering
-	\subfloat[]{\includegraphics[width=0.45\columnwidth]{./introduction/camera-stereo-old.jpg}}%
-	\hfill
-	\centering
-	\subfloat[]{\includegraphics[width=0.45\columnwidth]{./introduction/camera-stereo-new.jpg}}%
-	\hfill
-\end{figure}
-
+	\frametitle{SLAM Visual}
+    \begin{itemize}
+        \item SLAM Visual: Cámaras como sensores
+        \begin{itemize}
+            \item Obtienen gran cantidad de información del ambiente.
+            \item Pueden operar tanto en ambientes interiores como exteriores.
+            \item Son sensores pasivos.
+            \item De bajo costo y portátiles.
+        \end{itemize}
+    \end{itemize}
+    
+    \pause{}
+    \begin{itemize}
+        \item Ventajas al trabajar con cámaras estéreo        
+        \begin{itemize}
+            \item Permiten recuperar la profundidad de la escena con una única captura.
+            \item Permiten conocer la escala real de la escena observada.
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 
@@ -180,6 +181,7 @@ Método de reconstrucción 3D o mapeo denso en tiempo real sobre sistemas de loc
 \subsection{Cámaras}
 
 
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 \frametitle{Modelo de cámara}
 
@@ -199,12 +201,9 @@ v
 \end{frame}
 
 
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 \frametitle{Modelo de cámara pinhole}
-
-\pnote{* Rayo principal o eje principal de la cámara: rayo que se origina en el centro focal \cameraCenter y es perpendicular al plano de la imagen.}
-
-\pnote{* Punto principal: el punto donde este rayo intersecta al plano de la imagen es denominado.}
 
 \begin{block}{Cámara pinhole}
 El punto de la imagen $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$ es determinado como la intersección entre el \emph{plano de la imagen} y el rayo que une el punto del mundo 3D $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$ con el \emph{centro focal} $\cameraCenter$ de la cámara.
@@ -219,10 +218,9 @@ El punto de la imagen $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$ es 
 \end{frame}
 
 
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 \frametitle{Modelo de cámara pinhole}
-
-\pnote{* Proyección central: Utilizando la propiedad de semejanza de triángulos, el punto 3D es mapeado al punto en el plano de la imagen.}
 
 \begin{block}{Proyección central}
 Asumiendo el centro focal en el origen de coordenadas y el plano de la imagen $Z=f$:
@@ -250,12 +248,9 @@ fy/z
 \end{frame}
 
 
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 \frametitle{Triangulación estéreo}
-
-\pnote{* Sea x = x y z un punto 3D cuyas coordenadas son desconocidas. Conociendo las proyecciones correspondientes, la posición del punto x puede ser derivada.}
-
-\pnote{* Aplicando la propiedad de triángulos semejantes entre el triángulo de línea negra punteada y el triángulo de línea roja en la Figura, la siguiente ecuación puede ser formulada.}
 
 Proyecciones correspondientes $\imagePoint_{l}=\begin{bmatrix}u_{l} & v_{l}\end{bmatrix}$ y $\imagePoint_{r}=\begin{bmatrix}u_{r} & v_{r}\end{bmatrix}$ sobre los planos focales de la imagen izquierda y derecha respectivamente,
 la posición del punto $\point$ puede ser derivada.
@@ -275,10 +270,9 @@ la posición del punto $\point$ puede ser derivada.
 \end{frame}
 
 
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 \frametitle{Triangulación estéreo}
-
-\pnote{* De la misma manera, utilizando propiedad de triángulos semejantes nuevamente sobre la Figura, se obtienen las restantes ecuaciones.}
 
 \begin{equation}
 \frac{x}{z}=\frac{u_{l}-c_{u}}{f}\qquad\frac{y}{z}=\frac{v_{l}-c_{v}}{f}
@@ -305,10 +299,9 @@ z=\frac{bf}{u_{l}-u_{r}}\;
 \subsection{Disparidad}
 
 
+% Frame ---------------------------------------------------------------------
 \begin{frame}
 \frametitle{Disparidad}
-
-\pnote{* Cuando el valor de disparidad $d$ es cercano a $0$, pequeñas diferencias de disparidad producen un gran cambio en la profundidad del punto. En consecuencia, la reconstrucción 3D del ambiente mediante cámaras estéreo es más precisa para puntos cercanos a la cámara.}
 
 \begin{block}{Definición - Disparidad}
 La disparidad $d$ es definida como la distancia existente entre las proyecciones de las diferentes cámaras.
@@ -968,16 +961,30 @@ d=u_{l}-u_{r}=\frac{bf}{z}
 \end{frame}
 
 
-\section*{Agradecimientos}
+\section*{}
+
 
 \setbeamercovered{invisible}
 
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Publicaciones}
+
+	\begin{itemize}
+		\item A. D'Alessandro, T. Pire, R. Baravalle: \textbf{Hacia una densificación de sistemas SLAM dispersos basados en visión estéreo}. En IX Jornadas Argentinas de Robótica (JAR) 2017. 15, 16 y 17 de Noviembre de 2017. Facultad Regional Córdoba, Córdoba, Universidad Tecnológica Nacional. Noviembre 2017.
+		\vspace{1em}
+		\item T. Pire, R. Baravalle, A. D'Alessandro, J. Civera: \textbf{Real-time and Locally Dense Stereo SLAM}. En Robotics and Autonomous Systems (RAS). (En revisión).
+	\end{itemize}
+    
+\end{frame}
+
+
 \begin{frame}
 	\centering
-	\Large{Muchísimas gracias!}
-	
-	\pause{Preguntas?}
-	
+	\Large{Muchísimas gracias!}	
+	\\
+	\pause{Preguntas?}	
 	\vspace{2cm}
 \end{frame}
 
