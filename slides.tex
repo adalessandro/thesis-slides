@@ -47,6 +47,8 @@
    \end{frame}
 }
 
+\setbeamercovered{transparent}
+
 \input{./math_preamble}
 
 \setbeamerfont{normal text}{size*={10}{10}}
@@ -436,11 +438,18 @@ d=u_{l}-u_{r}=\frac{bf}{z}
 \begin{frame}
 	\frametitle{Refinamiento de mapa}
 	
+	Actualización de trayectoria:
 	\begin{itemize}
-		\item Actualizar el mapa denso 3D al recibir actualizaciones de posiciones.
-		\item Comportamiento esperable en sistemas de SLAM.
-		\item Swap a memoria secundaria. Permite secuencias de extensa longitud.
+		\item Transforma nubes de puntos cuando la posición del keyframe asociado es actualizada.
+		\item Comportamiento esperable en sistemas de SLAM, que refinan la trayectoria a lo largo de la secuencia.
+	\end{itemize}
+
+	\vspace{2em}
+	\pause{}
+	Swap a memoria secundaria:
+	\begin{itemize}
 		\item Nubes de puntos en RAM hasta que salen del \emph{mapa local}.
+		\item Permite secuencias de extensa longitud.
 	\end{itemize}
 
 \end{frame}
@@ -512,7 +521,8 @@ d=u_{l}-u_{r}=\frac{bf}{z}
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{KITTI}
+	\frametitle{Dataset KITTI}
+
 	\begin{figure}
 		\subfloat[] {
 			\includegraphics[width=0.3\columnwidth]{./images/kitti_sensors}
@@ -525,15 +535,22 @@ d=u_{l}-u_{r}=\frac{bf}{z}
 			\end{tabular}
 		}
 	\end{figure}
+
+	\begin{itemize}
+        \item Ambientes exteriores (trayectorias de varios kilómetros)
+        \item 1344$\times$391@10Hz, baseline: 60cm
+    \end{itemize}
+
 \end{frame}
 
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{Tsukuba}
+	\frametitle{Dataset Tsukuba}
+
 	\begin{figure}
 		\subfloat[] {
-			\includegraphics[width=0.4\columnwidth]{./images/tsukuba_dataset}
+			\includegraphics[width=0.41\columnwidth]{./images/tsukuba_dataset}
 		}\hspace{0.2cm}
 		\subfloat[] {
 			\begin{tabular}[b]{c}%
@@ -542,29 +559,26 @@ d=u_{l}-u_{r}=\frac{bf}{z}
 			\end{tabular}
 		}
 	\end{figure}
+	
+	\begin{itemize}
+        \item Ambiente interior (sintético)
+        \item 640$\times$480@30Hz, baseline: 10cm
+    \end{itemize}
+    
 \end{frame}
 
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{Ground truth - Mapas de profundidad}
+	\frametitle{Reconstrucción 3D: KITTI}
+    TODO: Agregar video de S-PTAM Denso.
 \end{frame}
-
-
-\subsection{Resultados}
 
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{Reconstrucción 3D}
+	\frametitle{Reconstrucción 3D: Tsukuba}
 	\begin{figure}
-		\subfloat[] {
-			\begin{tabular}[b]{c}
-				\includegraphics[width=0.3\columnwidth]{./images/kitti_3d_1}\thickspace
-				\includegraphics[width=0.3\columnwidth]{./images/kitti_3d_2}\thickspace
-				\includegraphics[width=0.3\columnwidth]{./images/kitti_3d_3}
-			\end{tabular}
-		}\vspace{0.1cm}
 		\subfloat[] {
 			\begin{tabular}[b]{c}
 				\includegraphics[width=0.3\columnwidth,height=3.0cm]{./images/tsukuba_3d_1}\thickspace
@@ -573,6 +587,44 @@ d=u_{l}-u_{r}=\frac{bf}{z}
 			\end{tabular}
 		}
 	\end{figure}
+\end{frame}
+
+
+\subsection{Resultados}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Análisis del error}
+	
+	\vspace{-1em}
+	\pause{}
+	Experimentos:
+	\begin{itemize}
+		\item Comparación de \emph{mapas de profundidad}.
+		\item A cada píxel se le asigna el valor de profundidad del punto 3D proyectado.
+		\item Generamos un mapa de profundidad para cada keyframe utilizando:
+		\begin{itemize}
+			\item \emph{Ground truth}.
+			\item S-PTAM Denso: proyectando la nubes de puntos global.
+			\item LIBELAS: mapa de disparidad.
+		\end{itemize}
+	\end{itemize}
+
+	\vspace{1em}
+	\pause{}	
+	KITTI - Ground truth:
+	\begin{itemize}
+		\item Velodyne: nubes de puntos.
+		\item GPS: posición.
+	\end{itemize}
+	
+	\vspace{1em}
+	Tsukuba - Ground truth:
+	\begin{itemize}
+		\item Dataset sintético: provee posición y mapa de profundidad exactos.
+	\end{itemize}
+	
 \end{frame}
 
 
@@ -918,6 +970,8 @@ d=u_{l}-u_{r}=\frac{bf}{z}
 
 \section*{Agradecimientos}
 
+\setbeamercovered{invisible}
+
 \begin{frame}
 	\centering
 	\Large{Muchísimas gracias!}
@@ -925,7 +979,6 @@ d=u_{l}-u_{r}=\frac{bf}{z}
 	\pause{Preguntas?}
 	
 	\vspace{2cm}
-	Contacto: {\tt pire@cifasis-conicet.gov.ar}
 \end{frame}
 
 \end{document}
