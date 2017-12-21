@@ -606,3 +606,55 @@ Búsqueda de correspondencias sobre la línea epipolar.
 	\end{tabular}
 
 \end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Expansión y fusión de mapa: Heurística de fusión}
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=\columnwidth]{method/metodo-fusion-spa.pdf}
+	\end{figure}
+	\begin{equation*}
+		\point_{fusi\acute{o}n}=\frac{1}{\inverseDepth_{fusi\acute{o}n}}\frac{\point_{actual}}{\norm{\point_{actual}}}
+		\quad \text{donde} \quad 
+		\inverseDepth_{fusi\acute{o}n}=\frac{\inverseDepth_{actual}+\inverseDepth_{previo}}{2}
+	\end{equation*}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Análisis del error}
+	
+	\vspace{-1em}
+	Experimentos:
+	\begin{itemize}
+		\item Comparación de \emph{mapas de profundidad}.
+		\item A cada píxel se le asigna el valor de profundidad del punto 3D proyectado.
+		\item Generamos un mapa de profundidad para cada keyframe utilizando:
+		\begin{itemize}
+			\item S-PTAM Denso: proyectando la nubes de puntos global.
+			\item LIBELAS: mapa de disparidad.
+			\item \emph{Ground truth} (ver abajo).
+		\end{itemize}
+	\end{itemize}
+
+	\vspace{1em}
+	\pause{}	
+	KITTI - Ground truth:
+	\begin{itemize}
+		\item Velodyne: nubes de puntos.
+		\item GPS: posición.
+	\end{itemize}
+	
+	\vspace{1em}
+	Tsukuba - Ground truth:
+	\begin{itemize}
+		\item Dataset sintético: provee posición y mapa de profundidad exactos.
+	\end{itemize}
+	
+\end{frame}
+
+
+

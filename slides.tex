@@ -377,8 +377,8 @@
 
 
 \fullFrameMovie[loop]{~/Videos/S-PTAM.mkv}{./images/S-PTAM-video-cover.png}{
+	\frametitle{S-PTAM: Stereo Parallel Tracking and Mapping}
 	\pnote{
-	    \frametitle{S-PTAM: Stereo Parallel Tracking and Mapping}
     	Sensor: Cámara estéreo\\
 		Construye y mantiene un mapa disperso del entorno.\\
         Sistema SLAM basado en features.\\
@@ -404,7 +404,7 @@
 	
 	\begin{figure}[htb]
 		\centering
-		\includegraphics[width=1.0\columnwidth]{method/metodo-diagram.pdf}
+		\includegraphics[width=1.0\columnwidth]{./method/metodo-diagram.pdf}
 		\hfill
 	\end{figure}
 \end{frame}
@@ -458,24 +458,38 @@
 \end{frame}
 
 
-% Frame ---------------------------------------------------------------------
+%\includegraphics[width=0.2\columnwidth]{./images/swap-memory.png}
+
 \begin{frame}
 	\frametitle{Refinamiento de mapa}
 	
-	Actualización de trayectoria:
-	\begin{itemize}
-		\item Transforma nubes de puntos cuando la posición del keyframe asociado es actualizada.
-		\item Comportamiento esperable en sistemas de SLAM, que refinan la trayectoria a lo largo de la secuencia.
-	\end{itemize}
-
-	\vspace{2em}
-	\pause{}
-	Swap a memoria secundaria:
-	\begin{itemize}
-		\item Nubes de puntos en RAM hasta que salen del \emph{mapa local}.
-		\item Permite correr en secuencias de extensa longitud.
-	\end{itemize}
-
+	\pnote{
+		Transforma nubes de puntos cuando la posición del keyframe asociado es actualizada.\\
+		Comportamiento esperable en sistemas de SLAM, que refinan la trayectoria a lo largo de la secuencia.\\
+		Nubes de puntos en RAM hasta que salen del mapa local.\\
+		Permite correr en secuencias de extensa longitud.\\
+	}    
+	
+       \begin{tabular}{cl}  
+           \begin{tabular}{c}
+           \includegraphics[width=0.5\columnwidth]{./images/point_cloud_refinement.pdf}
+           \end{tabular}
+           & \begin{tabular}{l}
+             \parbox{0.5\linewidth}{
+	            \begin{itemize}
+	            	\item Refinamiento de nubes de puntos.
+	            	\item Swapping del mapa en memoria secundaria.
+		        \end{itemize}
+		    }
+			\end{tabular}
+		\end{tabular}
+		
+		\begin{figure}[!htb]
+		\captionsetup{justification=centering}
+		\subfloat[SWAP memory]{
+			\includegraphics[width=0.15\columnwidth]{./images/swap-memory.png}
+		}
+		\end{figure}
 \end{frame}
 
 
@@ -604,41 +618,14 @@
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{Análisis del error}
-	
-	\vspace{-1em}
-	Experimentos:
-	\begin{itemize}
-		\item Comparación de \emph{mapas de profundidad}.
-		\item A cada píxel se le asigna el valor de profundidad del punto 3D proyectado.
-		\item Generamos un mapa de profundidad para cada keyframe utilizando:
-		\begin{itemize}
-			\item S-PTAM Denso: proyectando la nubes de puntos global.
-			\item LIBELAS: mapa de disparidad.
-			\item \emph{Ground truth} (ver abajo).
-		\end{itemize}
-	\end{itemize}
-
-	\vspace{1em}
-	\pause{}	
-	KITTI - Ground truth:
-	\begin{itemize}
-		\item Velodyne: nubes de puntos.
-		\item GPS: posición.
-	\end{itemize}
-	
-	\vspace{1em}
-	Tsukuba - Ground truth:
-	\begin{itemize}
-		\item Dataset sintético: provee posición y mapa de profundidad exactos.
-	\end{itemize}
-	
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
 	\frametitle{KITTI: error de reconstrucción}
+	\pnote{
+		Comparación de mapas de profundidad.\\
+		Proyectamos nubes de puntos.\\
+		LIBELAS.\\
+		GT en KITTI y Tsukuba.\\
+	}	
+	
 	\vspace{-2em}
 	\begin{figure}
 		\subfloat[Imagen izquierda]{
