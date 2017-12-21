@@ -39,13 +39,13 @@
 % Para notas personales en el pdfpc
 \usepackage{pdfpcnotes}
 
-\AtBeginSection[]
-{
-   \begin{frame}
-       \frametitle{Índice}
-       \tableofcontents[currentsection]
-   \end{frame}
-}
+%\AtBeginSection[]
+%{
+%   \begin{frame}
+%       \frametitle{Índice}
+%       \tableofcontents[currentsection]
+%   \end{frame}
+%}
 
 \setbeamercovered{transparent}
 
@@ -54,7 +54,7 @@
 \setbeamerfont{normal text}{size*={10}{10}}
 \AtBeginDocument{\usebeamerfont{normal text}}
 
-\title{Mapeo denso en tiempo real sobre sistemas SLAM basados en visión estéreo}
+\title{Mapeo denso online sobre sistemas SLAM basados en visión estéreo}
 \author{Ariel D'Alessandro}
 \institute{Director: Taihú Pire. Co-Director: Rodrigo Baravalle. \\ \vspace{0.5cm} Tesina de Grado \\ Licenciatura en Ciencias de la Computación \\ FCEIA - UNR}
 \titlegraphic{\includegraphics[width=0.14\textwidth]{images/logo-unr.png}}
@@ -62,68 +62,95 @@
 
 \begin{document}
 
-\frame{\titlepage}
+\frame{
+	\titlepage
+	\pnote{
+		Soy Ariel y esta es mi tesina.\\
+		Agradecer jurado y dcc: Ana, Pablo G., Pablo Pilotti, Juan Carlos Gómez, Claudia Deco, Directores.\\
+	}
+}
 
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-\frametitle{Índice}
-\tableofcontents
+	\frametitle{Estructura de la presentación}
+	\tableofcontents
+	
+	\pnote{
+		Aportes 2,3,4.\\
+	}
 \end{frame}
 
 
 \section{Introducción}
 
 
-\subsection{Motivación}
+\subsection{Robótica móvil}
 
 
-% Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{Motivación}
-	
-	Problema de la robótica móvil
-	\begin{itemize}
-		\item Planeamiento de una trayectoria segura hacia determinados objetivos.
-		\item Debe hacerse a medida que el robot se desplaza a través de un entorno potencialmente desconocido.
-		\item Para esto resulta necesario contar con:
-		\begin{itemize}
-			\item Una representación del ambiente que se está transitando (mapa).
-			\item La ubicación del robot dentro de este mapa.
-			\item El mapa debe ser lo suficientemente detallado (denso) para que el robot pueda realizar un planeamiento seguro, evitando posibles obstáculos.
-		\end{itemize}
-	\end{itemize}
+	\frametitle{Robots móviles}
+	\begin{figure}[!h]
+		\centering
+		\subfloat[] 
+		{
+			\includegraphics[width=0.33\columnwidth]{./images/introduction/drone.jpg}
+		}
+		\subfloat[] 
+		{
+			\includegraphics[width=0.33\columnwidth]{./images/introduction/GoogleCar.jpg}
+		}
+		\subfloat[] 
+		{
+			\includegraphics[width=0.16\columnwidth]{./images/introduction/industrial_robot.png}
+		}\\
+		\subfloat[] 
+		{
+			\includegraphics[width=0.33\columnwidth]{./images/introduction/curiosity.png}
+		}
+		\subfloat[] 
+		{
+			\includegraphics[width=0.33\columnwidth]{./images/introduction/hortibot.png}
+		}
+		\subfloat[]
+		{
+			\includegraphics[width=0.33\columnwidth]{./images/introduction/aqua2.png}
+		}		 
+	\end{figure}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Navegación autónoma}
+	\begin{block}{}
+		La navegación autónoma puede definirse a grandes rasgos como la capacidad de moverse de forma segura a lo largo de una trayectoria entre un punto de inicio y uno final [1].
+	\end{block}
+	\vspace{5mm}
+	\begin{columns}
+		\column{0.4\textwidth}
+		\hspace{13pt}Pregunta:
+		\begin{enumerate}
+			\visible<2-7>{ \item[-] ¿Dónde estoy?}
+			\visible<4-7>{\item[-] ¿Por dónde estoy yendo?}
+			\visible<6-7>{\item[-] ¿Cómo llego hasta allí?}
+		\end{enumerate}
+		\column{0.6\textwidth}
+		Respuesta:
+		\begin{enumerate}[$\rightarrow$]
+			\visible<3-7>{ \item  Cálculo de la posición (Localization)}
+			\visible<5-7>{ \item  Representación del entorno (Mapping)}
+			\visible<7-7>{\item  Planeamiento de movimiento (Motion planning)}
+		\end{enumerate}
+	\end{columns}
+	\only<4>{}
+	\vfill
+	\begin{tiny}
+		[1] J. J. Leonard - et al., ``Mobile robot localization by ...,'' IEEE Transactions on Robotics and Automation, 2002.
+	\end{tiny}
 \end{frame}
 
 
 \subsection{SLAM}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{SLAM: Simultaneous Localization and Mapping}
-    \begin{itemize}
-        \item ¿Qué es SLAM?
-        \begin{itemize}
-            \item Localización y Mapeo Simultáneos.
-        \end{itemize}
-        \item ¿Por qué es importante en la robótica móvil? 
-    \end{itemize}
-
-    \begin{itemize}
-            \item Tipos de sensores
-            \begin{itemize}
-                \item Cámaras.
-				\item Sonares.
-				\item Láser.
-				\item GPS.
-				\item Sensores RGB-D.
-				\item IMU.
-				\item Encoders.
-            \end{itemize}
-    \end{itemize}
-
-\end{frame}
 
 
 % Frame ---------------------------------------------------------------------
@@ -144,6 +171,73 @@
 		\subfloat[]{\includegraphics[width=0.6\columnwidth]{./introduction/slam-landmarks.pdf}}
 		\hfill
 	\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Algunos de los sensores más utilizados}
+	\begin{figure}[!h]
+		\centering
+		\subfloat[] 
+		{
+			\includegraphics[width=0.225\columnwidth]{images/introduction/telemetro.png}
+		}
+		\subfloat[] 
+		{
+			\includegraphics[width=0.15\columnwidth]{images/introduction/ir_sensor.png}
+		}
+		\subfloat[] 
+		{
+			\includegraphics[width=0.18\columnwidth]{images/introduction/gps.jpg}
+		}
+		\subfloat[] 
+		{
+			\includegraphics[width=0.18\columnwidth]{images/introduction/imu.jpg}
+		}
+		\subfloat[] 
+		{
+			\includegraphics[width=0.2\columnwidth]{images/introduction/encoders-04.jpg}
+		}\\
+		\subfloat[]
+		{
+			\includegraphics[width=0.22\columnwidth]{images/introduction/sonar.png}
+		}
+		\subfloat[]
+		{
+			\centering
+			\includegraphics[width=0.3\columnwidth]{images/introduction/zed_camera2.png}
+		}
+		\subfloat[]
+		{
+			\includegraphics[width=0.16\columnwidth]{images/introduction/bumper.png}
+		}
+		\subfloat[]
+		{
+			\includegraphics[width=0.16\columnwidth]{images/introduction/laser.jpg}
+		}	
+	\end{figure}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{SLAM: Simultaneous Localization and Mapping}
+
+    \begin{itemize}
+            \item Tipos de sensores
+            \begin{itemize}
+                \item Cámaras.
+				\item Sonares.
+				\item Láser.
+				\item GPS.
+				\item Sensores RGB-D.
+				\item IMU.
+				\item Encoders.
+            \end{itemize}
+    \end{itemize}
+    
+    % TODO: agregar imágenes de sensores.
 
 \end{frame}
 
@@ -175,7 +269,7 @@
 \end{frame}
 
 
-\subsection{Conceptos básicos}
+\subsection{Cámaras}
 
 
 % Frame ---------------------------------------------------------------------
@@ -230,6 +324,9 @@
 % Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{Geometría estéreo}
+	\pnote{
+		10min\\	
+	}
 
 	\begin{block}{Definición - Disparidad}
 		Distancia existente entre las proyecciones de las diferentes cámaras.
@@ -259,39 +356,21 @@
 \subsection{S-PTAM}
 
 
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{S-PTAM}
-	\begin{figure}[htb]
-		\centering
-		\includegraphics[width=1.0\columnwidth]{method/portada-sptam-kitti-video.pdf}
-		\hfill
-	\end{figure}
-
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-    \frametitle{S-PTAM: Stereo Parallel Tracking and Mapping}
+\fullFrameMovie[loop]{~/Videos/S-PTAM.mkv}{./images/S-PTAM-video-cover.png}{
+	\pnote{
+	    \frametitle{S-PTAM: Stereo Parallel Tracking and Mapping}
     Características:
     \begin{itemize}
-    	\item Sensor: Cámara estéreo
-		\item Construye y mantiene un mapa disperso del entorno.
-        \item Sistema SLAM basado en features.
-		\item Basado en keyframes.
-        \item Fuertemente paralelizado: tracking, local mapping y loop closing.
-        \item Real-time incluso en trayectorias largas.
-        \item Código open-source en ROS (GPLv3) \url{https://github.com/lrse/sptam}
-    \end{itemize}
-\end{frame}
+    	Sensor: Cámara estéreo\\
+		Construye y mantiene un mapa disperso del entorno.\\
+        Sistema SLAM basado en features.\\
+		Basado en keyframes.\\
+        Fuertemente paralelizado: tracking, local mapping y loop closing.\\
+        Real-time incluso en trayectorias largas.\\
+        Código open-source en ROS (GPLv3) https://github.com/lrse/sptam\\
+	}
 
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-    \frametitle{S-PTAM en acción!}
-    TODO: Agregar video de S-PTAM.
-\end{frame}
+}
 
 
 \subsection{Funcionamiento}
@@ -299,8 +378,12 @@
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-
 	\frametitle{S-PTAM Denso}
+	\pnote{
+		Aporte de la tesina.\\
+		Breve resumen.\\
+	}	
+	
 	\begin{figure}[htb]
 		\centering
 		\includegraphics[width=1.0\columnwidth]{method/metodo-diagram.pdf}
@@ -312,6 +395,10 @@
 % Frame ---------------------------------------------------------------------
 \begin{frame}
 	\frametitle{Mapa de disparidad}
+	\pnote{
+		LIBELAS: librería mapa denso.\\
+		Usa todos los píxeles, contiene error (cielo).\\
+	}	
 
 	\begin{itemize}
 		\item Computa mapa de disparidad del \emph{keyframe} actual $\keyframe_{j}$.
@@ -335,25 +422,6 @@
 		\item Colores: (rojo: mayor disparidad, azul: menor disparidad).
 	\end{itemize}
 	
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{Expansión y fusión de mapa: Frustrum culling}
-	\begin{itemize}
-		\item Empleando la posición del keyframe $\keyframe_{j}$ se proyecta el \emph{mapa local}: últimas $J$ \emph{nubes de puntos} $\left\{ \pointCloud_{j-J},\hdots,\pointCloud_{j-1}\right\}$.
-		\begin{itemize}
-			\item Aplicando \emph{Frustum culling} para filtrar puntos no-visibles.
-		\end{itemize}
-	\item Utilizando el mapa de disparidad del \emph{keyframe} actual $\keyframe_{j}$ se buscan correspondencias.
-	\end{itemize}
-	
-	\begin{figure}[htb]
-		\centering
-		\includegraphics[width=0.6\columnwidth]{method/frustum_culling.pdf}
-	\end{figure}
-
 \end{frame}
 
 
@@ -398,56 +466,41 @@
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{ROS: Robot Operating System}
-    \begin{figure}[htb]
-        \centering
-        \includegraphics[width=0.55\columnwidth]{method/ros.png}
-    \end{figure}
-	\vspace{-2em}
-    \begin{itemize}
- 		\item Conjunto de frameworks para desarrollo de software en robótica.
-        \item Abstracción del hardware.
-        \item Control de dispositivos de bajo nivel.
-        \item Arquitectura:
-            \begin{itemize}
-	        	\item Cada nodo es una unidad de ejecución.
-	        	\item Comunicación entre nodos mediante mensajes.
-	        \end{itemize}
-        \item Mantenimiento de paquetes.
-        \item Utilizado en la comunidad robótica.
-    \end{itemize}
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{ROS: Robot Operating System}
+	\frametitle{Framework}
 	
+
 	\begin{figure}[htb]
 		\subfloat[] {
 			\begin{tabular}[b]{c}
 				\centering
 				$\vcenter{\hbox{\includegraphics[width=0.15\columnwidth]{./method/opencv.png}}}$
 				\hspace{1em}
-				$\vcenter{\hbox{\includegraphics[width=0.25\columnwidth]{./method/ros.png}}}$
+				$\vcenter{\hbox{\includegraphics[width=0.40\columnwidth]{./method/ros.png}}}$
 				\hspace{1em}
-				$\vcenter{\hbox{\includegraphics[width=0.25\columnwidth]{./method/pcl.png}}}$
+				$\vcenter{\hbox{\includegraphics[width=0.28\columnwidth]{./method/pcl.png}}}$
 			\end{tabular}
 		}
 	\end{figure}
 	
-	\vspace{-2em}
-	\begin{itemize}
-		\item Implementado como un nodo ROS.
-		\item Código fuente disponible públicamente bajo licencia (GPLv3) \url{https://github.com/CIFASIS/dense-sptam}.
-		\item Librerías:
-		\begin{itemize}
-			\item OpenCV: manejo y codificación de imágenes.
-			\item Point Cloud Library (PCL): manejo de nubes de puntos.
-			\item LIBELAS: cómputo de mapas de disparidad.
-		\end{itemize}
-		\item Compuesto de 3 hilos de ejecución paralela.
-    \end{itemize}
+	\vfill
+	\begin{tiny}
+		Código fuente disponible públicamente bajo licencia (GPLv3) \url{https://github.com/CIFASIS/dense-sptam}.
+	\end{tiny}
+	
+	\pnote{
+		Conjunto de frameworks para desarrollo de software en robótica.\\
+		Abstracción del hardware.\\
+	    Control de dispositivos de bajo nivel.\\
+	    Arquitectura: Cada nodo es una unidad de ejecución. Comunicación entre nodos mediante mensajes.
+		Mantenimiento de paquetes.\\
+	    Utilizado en la comunidad robótica.\\
+		Implementado como un nodo ROS.\\
+		OpenCV: manejo y codificación de imágenes.\\
+		Point Cloud Library (PCL): manejo de nubes de puntos.\\
+		LIBELAS: cómputo de mapas de disparidad.\\
+		Compuesto de 3 hilos de ejecución paralela.\\
+	}
+
 \end{frame}
 
 
@@ -508,13 +561,6 @@
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{Reconstrucción 3D: KITTI}
-    TODO: Agregar video de S-PTAM Denso.
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
 	\frametitle{Reconstrucción 3D: Tsukuba}
 	\begin{figure}
 		\subfloat[] {
@@ -525,6 +571,13 @@
 			\end{tabular}
 		}
 	\end{figure}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Reconstrucción 3D: KITTI}
+    Video S-PTAM Denso: KITTI Sequence 06
 \end{frame}
 
 
@@ -870,10 +923,10 @@
 \begin{frame}
 	\frametitle{Conclusiones}
 	\begin{itemize}
-		\item Sistema de SLAM capaz de generar un \textbf{mapa local denso} en \textbf{tiempo real}.
+		\item Sistema de SLAM capaz de generar un \textbf{mapa local denso} de manera \textbf{online}.
 	    \item Explota paralelismo.
         \item La precisión es útil para tareas de \textbf{navegación}.
-        \item Funciona incluso en trajectorias de grandes dimensiones.
+        \item Funciona incluso en trayectorias de grandes dimensiones.
         \item Evaluado en datasets públicos: KITTI (outdoors) y Tsukuba (indoors).
 	    \item Código open-source en ROS (GPLv3) \url{https://github.com/CIFASIS/dense-sptam}
 	    \item Nodo ROS reutilizable, desacoplado del sistema de SLAM disperso.
