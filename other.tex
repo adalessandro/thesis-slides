@@ -391,3 +391,118 @@ Búsqueda de correspondencias sobre la línea epipolar.
 		\item Compuesto de 3 hilos de ejecución paralela.
     \end{itemize}
 \end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{KITTI: error de mediana}
+	\centering
+	Comparación de mediana de error (profundidad vs. error).
+	\vspace{-1em}
+	\begin{figure}[!htb]
+		\captionsetup{justification=centering}
+		\subfloat[KITTI 00]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/00.png}%
+		}
+		\hfil
+		\subfloat[KITTI 01]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/01.png}%
+		}
+	\end{figure}
+	\vspace{-2em}
+	\begin{figure}[!htb]
+		\captionsetup{justification=centering}
+		\subfloat[KITTI 02]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/02.png}%
+		}
+		\hfil
+		\subfloat[KITTI 03]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/03.png}%
+		}
+	\end{figure}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{KITTI: error de mediana}
+	\centering
+	Comparación de mediana de error (profundidad vs. error).
+	\vspace{-1em}
+	\begin{figure}[!htb]
+		\captionsetup{justification=centering}
+		\subfloat[KITTI 04]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/04.png}%
+		}
+		\hfil
+		\subfloat[KITTI 05]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/05.png}%
+		}
+	\end{figure}
+	\vspace{-2em}
+	\begin{figure}[!htb]
+		\captionsetup{justification=centering}
+		\subfloat[KITTI 07]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/07.png}%
+		}
+		\hfil
+		\subfloat[KITTI 08]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/08.png}%
+		}
+	\end{figure}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{KITTI: error de mediana}
+	\centering
+	Comparación de mediana de error (profundidad vs. error).
+	\vspace{-1em}
+	\begin{figure}[!htb]
+		\captionsetup{justification=centering}
+		\subfloat[KITTI 09]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/09.png}%
+		}
+		\hfil
+		\subfloat[KITTI 10]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/10.png}%
+		}
+	\end{figure}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Análisis de tiempos}
+	\vspace{-0.7em}
+	\begin{center}
+	\begin{figure}[tbh]
+	\begin{centering}
+	\begin{tabular}{cccc}
+		\toprule 
+		Secuencia & Disparidad & Expansión y fusión & Refinamiento\tabularnewline
+		\midrule
+		\midrule 
+		Tsukuba & 118.20 & 132.72 & 4.80\tabularnewline
+		\midrule 
+		KITTI 00 & 156.92 & 115.40 & 6.53\tabularnewline
+		\midrule 
+		KITTI 01 & 156.10 & 69.12 & 5.21\tabularnewline
+		\midrule 
+		KITTI 02 & 160.63 & 108.13 & 6.58\tabularnewline
+		\midrule 
+		KITTI 03 & 153.66 & 83.01 & 4.83\tabularnewline
+		\midrule 
+		KITTI 04 & 149.15 & 72.99 & 5.00\tabularnewline
+		\midrule 
+		KITTI 05 & 165.31 & 108.97 & 5.97\tabularnewline
+		\midrule 
+		KITTI 06 & 154.89 & 83.21 & 4.84\tabularnewline
+		\midrule 
+		KITTI 07 & 155.74 & 113.15 & 6.10\tabularnewline
+		\midrule 
+		KITTI 08 & 152.10 & 101.01 & 5.22\tabularnewline
+		\midrule 
+		KITTI 09 & 159.84 & 101.20 & 5.76\tabularnewline
+		\midrule 
+		KITTI 10 & 158.81 & 117.42 & 6.35\tabularnewline
+		\bottomrule
+	\end{tabular}
+	\par\end{centering}
+	\centering
+	\caption{Tiempo de computación promedio (en ms) para cada fase.}
+	\end{figure}
+	\par\end{center}
+\end{frame}
+

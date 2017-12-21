@@ -783,75 +783,6 @@
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{KITTI: error de mediana}
-	\centering
-	Comparación de mediana de error (profundidad vs. error).
-	\vspace{-1em}
-	\begin{figure}[!htb]
-		\captionsetup{justification=centering}
-		\subfloat[KITTI 00]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/00.png}%
-		}
-		\hfil
-		\subfloat[KITTI 01]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/01.png}%
-		}
-	\end{figure}
-	\vspace{-2em}
-	\begin{figure}[!htb]
-		\captionsetup{justification=centering}
-		\subfloat[KITTI 02]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/02.png}%
-		}
-		\hfil
-		\subfloat[KITTI 03]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/03.png}%
-		}
-	\end{figure}
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{KITTI: error de mediana}
-	\centering
-	Comparación de mediana de error (profundidad vs. error).
-	\vspace{-1em}
-	\begin{figure}[!htb]
-		\captionsetup{justification=centering}
-		\subfloat[KITTI 04]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/04.png}%
-		}
-		\hfil
-		\subfloat[KITTI 05]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/05.png}%
-		}
-	\end{figure}
-	\vspace{-2em}
-	\begin{figure}[!htb]
-		\captionsetup{justification=centering}
-		\subfloat[KITTI 07]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/07.png}%
-		}
-		\hfil
-		\subfloat[KITTI 08]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/08.png}%
-		}
-	\end{figure}
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{KITTI: error de mediana}
-	\centering
-	Comparación de mediana de error (profundidad vs. error).
-	\vspace{-1em}
-	\begin{figure}[!htb]
-		\captionsetup{justification=centering}
-		\subfloat[KITTI 09]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/09.png}%
-		}
-		\hfil
-		\subfloat[KITTI 10]{\includegraphics[width=0.35\columnwidth]{./experiments/kitti_medians/10.png}%
-		}
-	\end{figure}
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
 	\frametitle{Cantidad de puntos}
 	\begin{figure}[!htb]
 		\centering
@@ -866,53 +797,8 @@
 
 % Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{Análisis de tiempos}
-	\vspace{-0.7em}
-	\begin{center}
-	\begin{figure}[tbh]
-	\begin{centering}
-	\begin{tabular}{cccc}
-		\toprule 
-		Secuencia & Disparidad & Expansión y fusión & Refinamiento\tabularnewline
-		\midrule
-		\midrule 
-		Tsukuba & 118.20 & 132.72 & 4.80\tabularnewline
-		\midrule 
-		KITTI 00 & 156.92 & 115.40 & 6.53\tabularnewline
-		\midrule 
-		KITTI 01 & 156.10 & 69.12 & 5.21\tabularnewline
-		\midrule 
-		KITTI 02 & 160.63 & 108.13 & 6.58\tabularnewline
-		\midrule 
-		KITTI 03 & 153.66 & 83.01 & 4.83\tabularnewline
-		\midrule 
-		KITTI 04 & 149.15 & 72.99 & 5.00\tabularnewline
-		\midrule 
-		KITTI 05 & 165.31 & 108.97 & 5.97\tabularnewline
-		\midrule 
-		KITTI 06 & 154.89 & 83.21 & 4.84\tabularnewline
-		\midrule 
-		KITTI 07 & 155.74 & 113.15 & 6.10\tabularnewline
-		\midrule 
-		KITTI 08 & 152.10 & 101.01 & 5.22\tabularnewline
-		\midrule 
-		KITTI 09 & 159.84 & 101.20 & 5.76\tabularnewline
-		\midrule 
-		KITTI 10 & 158.81 & 117.42 & 6.35\tabularnewline
-		\bottomrule
-	\end{tabular}
-	\par\end{centering}
-	\centering
-	\caption{Tiempo de computación promedio (en ms) para cada fase.}
-	\end{figure}
-	\par\end{center}
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
 	\frametitle{S-PTAM Denso!}
-	TODO: Agregar video de S-PTAM.
+	Video S-PTAM Denso: KITTI Sequences (varias).
 \end{frame}
 
 
@@ -924,12 +810,13 @@
 	\frametitle{Conclusiones}
 	\begin{itemize}
 		\item Sistema de SLAM capaz de generar un \textbf{mapa local denso} de manera \textbf{online}.
-	    \item Explota paralelismo.
-        \item La precisión es útil para tareas de \textbf{navegación}.
-        \item Funciona incluso en trayectorias de grandes dimensiones.
-        \item Evaluado en datasets públicos: KITTI (outdoors) y Tsukuba (indoors).
+        \item La \textbf{precisión} es útil para tareas de navegación.
+        \item Funciona incluso en trayectorias de \textbf{grandes dimensiones}.
+        \item Evaluado en \textbf{datasets} públicos: KITTI (outdoors) y Tsukuba (indoors).
 	    \item Código open-source en ROS (GPLv3) \url{https://github.com/CIFASIS/dense-sptam}
-	    \item Nodo ROS reutilizable, desacoplado del sistema de SLAM disperso.
+	    \item Nodo ROS \textbf{reutilizable}, desacoplado del sistema de SLAM disperso.
+	  	\item Explota \textbf{paralelismo}.
+	  	\item No requiere \textbf{GPU}.
 	\end{itemize}
 \end{frame}
 
@@ -938,13 +825,11 @@
 \begin{frame}
 	\frametitle{Trabajo Futuro}
 	\begin{itemize}
-		\item Incluir información de apariencia en la heurística.
-		\item Ampliar criterio de correspondencias a considerar un entorno alrededor del píxel proyectado.
-		\item Simplificar las nubes de puntos mediante la detección de regiones planares.
-		\item Características visuales de alto nivel: información semántica y técnicas de machine-learning.
-		\item Analizar resultados con otras librerías de disparidad y diferentes métodos de SLAM.
-		\item Experimentar sobre otros datasets.
-		\item Implementar con soporte para GPU.
+		\item Incluir información de \textbf{apariencia} en la heurística.
+		\item Ampliar \textbf{criterio} de correspondencias a considerar un entorno alrededor del píxel proyectado.
+		\item Simplificar las nubes de puntos mediante la detección de regiones \textbf{planares}.
+		\item Características visuales de alto nivel: información semántica, machine-learning.
+		\item Utilizar \textbf{covisibilidad} en el mapa local.
 	\end{itemize}
 \end{frame}
 
@@ -961,8 +846,6 @@
 
 	\begin{itemize}
 		\item A. D'Alessandro, T. Pire, R. Baravalle: \textbf{Hacia una densificación de sistemas SLAM dispersos basados en visión estéreo}. En IX Jornadas Argentinas de Robótica (JAR) 2017. 15, 16 y 17 de Noviembre de 2017. Facultad Regional Córdoba, Córdoba, Universidad Tecnológica Nacional. Noviembre 2017.
-		\vspace{1em}
-		\item T. Pire, R. Baravalle, A. D'Alessandro, J. Civera: \textbf{Real-time and Locally Dense Stereo SLAM}. En Robotics and Autonomous Systems (RAS). (En revisión).
 	\end{itemize}
     
 \end{frame}
