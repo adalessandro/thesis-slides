@@ -448,17 +448,39 @@
 	\frametitle{Expansión y fusión de mapa: Heurística de fusión}
 	\begin{figure}[htb]
 		\centering
-		\includegraphics[width=\columnwidth]{method/metodo-fusion-spa.pdf}
+		\includegraphics[width=\columnwidth]{./method/metodo-fusion-spa.pdf}
 	\end{figure}
-	\begin{equation*}
-		\point_{fusi\acute{o}n}=\frac{1}{\inverseDepth_{fusi\acute{o}n}}\frac{\point_{actual}}{\norm{\point_{actual}}}
-		\quad \text{donde} \quad 
-		\inverseDepth_{fusi\acute{o}n}=\frac{\inverseDepth_{actual}+\inverseDepth_{previo}}{2}
-	\end{equation*}
+	\begin{block}{Caso 1}
+		Los puntos coinciden por su distancia eclideana y se \textbf{fusionan} en $\point_{fusion}$.
+	\end{block}
 \end{frame}
 
 
-%\includegraphics[width=0.2\columnwidth]{./images/swap-memory.png}
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Expansión y fusión de mapa: Heurística de fusión}
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=\columnwidth]{./method/metodo-fusion-spa-caso-1.pdf}
+	\end{figure}
+	\begin{block}{Caso 2}
+		Los puntos \textbf{no} son coincidentes y el nuevo punto ($\point_{actual}$) \textbf{ocluye} al punto ($\point_{previo}$) del mapa.
+	\end{block}
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Expansión y fusión de mapa: Heurística de fusión}
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=\columnwidth]{./method/metodo-fusion-spa-caso-2.pdf}
+	\end{figure}
+	\begin{block}{Caso 3}
+		Los puntos \textbf{no} son coincidentes y el nuevo punto ($\point_{actual}$) está \textbf{detrás} del punto ($\point_{previo}$) del mapa.  \textbf{Posible outlier!}
+	\end{block}
+\end{frame}
+
 
 \begin{frame}
 	\frametitle{Refinamiento de mapa}

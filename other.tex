@@ -658,3 +658,20 @@ Búsqueda de correspondencias sobre la línea epipolar.
 
 
 
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Expansión y fusión de mapa: Heurística de fusión}
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=\columnwidth]{method/metodo-fusion-spa.pdf}
+	\end{figure}
+	\begin{equation*}
+		\point_{fusi\acute{o}n}=\frac{1}{\inverseDepth_{fusi\acute{o}n}}\frac{\point_{actual}}{\norm{\point_{actual}}}
+		\quad \text{donde} \quad 
+		\inverseDepth_{fusi\acute{o}n}=\frac{\inverseDepth_{actual}+\inverseDepth_{previo}}{2}
+	\end{equation*}
+\end{frame}
+
+
+
+
