@@ -506,3 +506,103 @@ Búsqueda de correspondencias sobre la línea epipolar.
 	\par\end{center}
 \end{frame}
 
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Modelo de cámara pinhole}
+
+	\begin{block}{Definición - Cámara}
+		Una cámara es definida matemáticamente como un mapeo entre puntos del mundo 3D y puntos de la imagen (píxeles).
+	\end{block}
+
+	\begin{block}{Cámara pinhole}
+		El punto de la imagen $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$ es determinado como la intersección entre el \emph{plano de la imagen} y el rayo que une el punto del mundo 3D $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$ con el \emph{centro focal} $\cameraCenter$ de la cámara.
+	\end{block}
+
+	\vspace{-0.5em}
+	\begin{figure}[!htb]
+		\centering
+		\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pinhole_camera_model.pdf}}%
+		\hfill
+	\end{figure}
+
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Geometría estéreo}
+
+    \begin{align*}
+        \point&=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}
+    \end{align*}
+
+	\begin{equation}
+		\begin{aligned}x=\frac{(u_{l}-c_{u})z}{f}\;\qquad
+		y=\frac{(v_{l}-c_{v})z}{f}\;\qquad
+		z=\frac{bf}{u_{l}-u_{r}}\;
+		\end{aligned}
+	\end{equation}
+
+	\begin{figure}[!htb]
+		\centering
+		\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_rectification.pdf}}%
+		\hfill
+		\centering
+		\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation.pdf}}%
+		\hfill
+	\end{figure}
+
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{Geometría estéreo}
+	\pnote{
+		10min\\	
+	}
+
+	\begin{block}{Definición - Disparidad}
+		Distancia existente entre las proyecciones de las diferentes cámaras.
+	\begin{equation}
+		d=u_{l}-u_{r}=\frac{bf}{z}
+	\end{equation}
+	\end{block}
+
+	\textbf{Nota}: la profundidad $z$ es inversamente proporcional a la disparidad $d$.
+
+	\vspace{-1em}
+	\begin{figure}[!htb]
+		\centering
+		\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_rectification.pdf}}%
+		\hfill
+		\centering
+		\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation.pdf}}%
+		\hfill
+	\end{figure}
+
+\end{frame}
+
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+	\frametitle{SLAM Visual - Cámaras como sensores}
+
+	\begin{tabular}{cl}  
+		\begin{tabular}{c}
+			\includegraphics[width=0.16\columnwidth]{./images/robot-with-camera.jpg}
+		\end{tabular}
+		\begin{tabular}{c}\parbox{0.5\linewidth} {
+			\begin{itemize}
+	            \item Rica información.
+	            \item Ambientes interiores y exteriores.
+	            \item Sensores pasivos.
+	            \item Bajo costo.
+	            \item Portátiles.
+		    \end{itemize}
+		\end{tabular}
+	\end{tabular}
+
+\end{frame}

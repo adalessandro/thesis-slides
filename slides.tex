@@ -176,7 +176,12 @@
 
 
 \begin{frame}
-	\frametitle{Algunos de los sensores más utilizados}
+	\frametitle{Algunos de los sensores más utilizados}	
+	\pnote{
+		Telemetro - IR - GPS - IMU - encoders\\
+		Sonar - Zed camera - Bumper - Laser\\
+	}
+	
 	\begin{figure}[!h]
 		\centering
 		\subfloat[] 
@@ -215,137 +220,124 @@
 		\subfloat[]
 		{
 			\includegraphics[width=0.16\columnwidth]{images/introduction/laser.jpg}
-		}	
+		}
 	\end{figure}
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{SLAM: Simultaneous Localization and Mapping}
-
-    \begin{itemize}
-            \item Tipos de sensores
-            \begin{itemize}
-                \item Cámaras.
-				\item Sonares.
-				\item Láser.
-				\item GPS.
-				\item Sensores RGB-D.
-				\item IMU.
-				\item Encoders.
-            \end{itemize}
-    \end{itemize}
-    
-    % TODO: agregar imágenes de sensores.
-
 \end{frame}
 
 
 \subsection{SLAM Visual}
 
 
-% Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{SLAM Visual}
-    \begin{itemize}
-        \item SLAM Visual: Cámaras como sensores
-        \begin{itemize}
-            \item Obtienen gran cantidad de información del ambiente.
-            \item Pueden operar tanto en ambientes interiores como exteriores.
-            \item Son sensores pasivos.
-            \item De bajo costo y portátiles.
-        \end{itemize}
-    \end{itemize}
-    
-    \pause{}
-    \begin{itemize}
-        \item Ventajas al trabajar con cámaras estéreo        
-        \begin{itemize}
-            \item Permiten recuperar la profundidad de la escena con una única captura.
-            \item Permiten conocer la escala real de la escena observada.
-        \end{itemize}
-    \end{itemize}
+	\frametitle{SLAM Visual: Cámaras como sensores}
+	
+	¿Por qué utilizar cámaras?
+       \begin{tabular}{cl}  
+         \begin{tabular}{c}
+           \includegraphics[width=0.3\columnwidth]{./images/robot-with-camera.jpg}
+           \end{tabular}
+           & \begin{tabular}{l}
+             \parbox{0.5\linewidth}{
+	            \begin{itemize}
+	              	\pause
+		            \item Rica información.
+					\pause
+		            \item Ambientes interiores y exteriores.
+		            \pause
+		            \item Sensores pasivos.
+		            \pause
+		            \item Bajo costo.
+		            \pause
+		            \item Portátiles.
+		        \end{itemize}
+		    }
+        \end{tabular}  \\
+	\end{tabular}
 \end{frame}
 
 
 \subsection{Cámaras}
 
 
-% Frame ---------------------------------------------------------------------
 \begin{frame}
-	\frametitle{Modelo de cámara pinhole}
-
-	\begin{block}{Definición - Cámara}
-		Una cámara es definida matemáticamente como un mapeo entre puntos del mundo 3D y puntos de la imagen (píxeles).
-	\end{block}
-
-	\begin{block}{Cámara pinhole}
-		El punto de la imagen $\imagePoint=\begin{bmatrix}u & v\end{bmatrix}^{\top}$ es determinado como la intersección entre el \emph{plano de la imagen} y el rayo que une el punto del mundo 3D $\point=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}$ con el \emph{centro focal} $\cameraCenter$ de la cámara.
-	\end{block}
-
-	\vspace{-0.5em}
-	\begin{figure}[!htb]
-		\centering
-		\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/pinhole_camera_model.pdf}}%
-		\hfill
-	\end{figure}
-
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{Geometría estéreo}
-
-    \begin{align*}
-        \point&=\begin{bmatrix}x & y & z\end{bmatrix}^{\top}
-    \end{align*}
-
-	\begin{equation}
-		\begin{aligned}x=\frac{(u_{l}-c_{u})z}{f}\;\qquad
-		y=\frac{(v_{l}-c_{v})z}{f}\;\qquad
-		z=\frac{bf}{u_{l}-u_{r}}\;
-		\end{aligned}
-	\end{equation}
-
-	\begin{figure}[!htb]
-		\centering
-		\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_rectification.pdf}}%
-		\hfill
-		\centering
-		\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation.pdf}}%
-		\hfill
-	\end{figure}
-
-\end{frame}
-
-
-% Frame ---------------------------------------------------------------------
-\begin{frame}
-	\frametitle{Geometría estéreo}
+	\frametitle{Reconstrucción 3D con una cámara}
+	
 	\pnote{
-		10min\\	
+		Cámara = Mapeo punto 3D a píxel 2D\\
+		Necesitamos 2 puntos de vista\\
+		Necesitamos conocer el desplazamiento\\
 	}
-
-	\begin{block}{Definición - Disparidad}
-		Distancia existente entre las proyecciones de las diferentes cámaras.
-	\begin{equation}
-		d=u_{l}-u_{r}=\frac{bf}{z}
-	\end{equation}
+	% SPEECH:
+	% hacer el ejemplo de cerrar un ojo y mover el dedo indice. Luego de mover el dedo caias veces notar que no conocemos su distancia.
+	\only<1>{
+		\begin{figure}[!h]
+			\includegraphics[width=0.8\textwidth]{images/slam/monocularReconstruction1}
+		\end{figure}
+	}
+	
+	% SPEECH:
+	% necesitamos dos puntos de vistas para poder realizar una reconstrucción 3D
+	
+	\only<2>{
+		\begin{figure}[!h]
+			\includegraphics[width=0.8\textwidth]{images/slam/monocularReconstruction2}
+		\end{figure}
+	}
+	
+	
+	% SPEECH:
+	% pero si estamos usando una sola camara y la movemos para tener dos puntos de vistas distintos, tenemos que saber cuanto se desplazo. Caso contrio, no vamos a poder saber si nos movimos poco, o si nos movimos mucho y las cosas estan muy lejos.
+	
+	\only<3>{
+		\begin{figure}[!h]
+			\includegraphics[width=0.8\textwidth]{images/slam/monocularReconstruction3}
+		\end{figure}
+	}
+	
+	\begin{block}{}
+		Al utilizar una cámara, hay una ambig\"{u}edad sobre la escena que se esta observando.
 	\end{block}
+	
+\end{frame}
 
-	\textbf{Nota}: la profundidad $z$ es inversamente proporcional a la disparidad $d$.
 
-	\vspace{-1em}
-	\begin{figure}[!htb]
-		\centering
-		\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_rectification.pdf}}%
-		\hfill
-		\centering
-		\subfloat[]{\includegraphics[width=0.5\columnwidth]{./cameras/stereo_triangulation.pdf}}%
-		\hfill
+\begin{frame}
+	\frametitle{¿Y si tenemos dos cámaras?}
+	
+	\pnote{
+		Permiten recuperar la profundidad de la escena con una única captura.\\
+		Permiten conocer la escala real de la escena observada.\\
+	}
+	
+	\begin{figure}[!h]
+		\includegraphics[width=0.6\textwidth]{images/slam/stereoReconstruction}
 	\end{figure}
+	
+	\begin{block}{}
+		Si tenemos {\bf dos cámaras}, y se conoce la posición de una con respecto a la otra, es posible realizar una reconstrucción 3D sin ambig\"{u}edades.
+	\end{block}
+	
+\end{frame}
+
+
+% Frame ---------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Geometría estéreo: Disparidad}
+    \pnote{
+	    Distancia existente entre las proyecciones de las diferentes cámaras.\\
+	    La profundidad z es inversamente proporcional a la disparidad d.\\
+    }
+    
+    \begin{figure}[!htb]
+        \centering
+        \subfloat[]{
+        \hspace{-3.0em}
+        \includegraphics[width=1.15\columnwidth]{./images/disparity_sketch.jpeg}}
+        \hfill
+        \centering
+
+        \hfill
+    \end{figure}
 
 \end{frame}
 
@@ -359,8 +351,6 @@
 \fullFrameMovie[loop]{~/Videos/S-PTAM.mkv}{./images/S-PTAM-video-cover.png}{
 	\pnote{
 	    \frametitle{S-PTAM: Stereo Parallel Tracking and Mapping}
-    Características:
-    \begin{itemize}
     	Sensor: Cámara estéreo\\
 		Construye y mantiene un mapa disperso del entorno.\\
         Sistema SLAM basado en features.\\
